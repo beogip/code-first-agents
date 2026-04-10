@@ -3,13 +3,93 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary -->
   <title>Skill Orchestration | Code-First Agents</title>
-  <meta name="description" content="Markdown files that turn LLMs into reliable executors. The consumer side of deterministic tools.">
+  <meta name="description" content="Write SKILL.md files that turn LLMs into reliable executors. Consume tool output, chain tools, use guards, and make the LLM follow instructions verbatim.">
+  <meta name="keywords" content="AI agents, SKILL.md, Agent Skills, Claude, LLM orchestration, skill files, prompt engineering, verbatim execution">
+  <meta name="author" content="Juan Gipponi">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0a0f">
+  <link rel="canonical" href="https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html">
+  <meta property="og:title" content="Skill Orchestration — Code-First Agents">
+  <meta property="og:description" content="Write SKILL.md files that turn LLMs into reliable executors. The consumer side of deterministic tools.">
+  <meta property="og:image" content="https://beogip.github.io/code-first-agents/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Code-First Agents">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:author" content="Juan Gipponi">
+  <meta property="article:section" content="AI Engineering">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html">
+  <meta name="twitter:title" content="Skill Orchestration — Code-First Agents">
+  <meta name="twitter:description" content="Write SKILL.md files that turn LLMs into reliable executors. The consumer side of deterministic tools.">
+  <meta name="twitter:image" content="https://beogip.github.io/code-first-agents/assets/og-image.png">
+
+  <!-- Assets -->
   <link rel="stylesheet" href="../assets/style.css">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="alternate" type="text/markdown" href="skill-orchestration.md" title="Markdown version for LLMs">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Skill Orchestration",
+    "name": "Skill Orchestration — Code-First Agents",
+    "description": "Write SKILL.md files that turn LLMs into reliable executors. Consume tool output, chain tools, use guards, and make the LLM follow instructions verbatim.",
+    "url": "https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Person",
+      "name": "Juan Gipponi",
+      "url": "https://www.linkedin.com/in/juan-gipponi"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Code-First Agents",
+      "url": "https://beogip.github.io/code-first-agents/"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Code-First Agents",
+      "url": "https://beogip.github.io/code-first-agents/"
+    },
+    "license": "https://opensource.org/licenses/MIT",
+    "keywords": "AI agents, SKILL.md, Agent Skills, LLM orchestration, prompt engineering"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Code-First Agents",
+        "item": "https://beogip.github.io/code-first-agents/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Skill Orchestration",
+        "item": "https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
