@@ -44,15 +44,11 @@ bun examples/tools/analyze-issue.ts --owner acme --repo app --issue 42
 
 See [`examples/skills/plan-issue/SKILL.md`](examples/skills/plan-issue/SKILL.md) for a full skill that orchestrates `analyze-issue.ts` at Level 3.
 
-## Running the site locally
+## Site
 
-The site is static HTML/CSS. Open `index.html` in a browser, or serve the root directory with any static file server:
+The full documentation lives at **https://beogip.github.io/code-first-agents/**.
 
-```bash
-bunx serve .
-# or
-python3 -m http.server
-```
+The site source (HTML, CSS, markdown mirrors) lives in the [`gh-pages` branch](https://github.com/beogip/code-first-agents/tree/gh-pages). This branch (`main`) holds the example tools, the example skill, and the repo metadata.
 
 ## Contributing
 
