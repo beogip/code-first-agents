@@ -1,67 +1,33 @@
-# Code-First Agents
+# Code-First Agents — Site
 
-**Design patterns for building reliable AI agents by moving deterministic work from the LLM to code.**
+This branch (`gh-pages`) hosts the live site for **Code-First Agents**, a set of design patterns for building reliable AI agents by moving deterministic work from the LLM to code.
 
-Your agent works. Until it doesn't. And you can't tell why.
+**Live site:** https://beogip.github.io/code-first-agents/
 
-The LLM picks the wrong branch. It skips a step. It hallucinates a field name. You can't write a test for any of it because the decision happened inside a black box.
+## Looking for the code?
 
-Code-First Agents is a set of patterns for moving decision-making out of the LLM and into deterministic code. The LLM orchestrates. Code executes. The more you push into code, the less you depend on probabilistic output for things that should be deterministic.
+Examples, tools, and skills live in the [`main` branch](https://github.com/beogip/code-first-agents/tree/main).
 
-## Patterns
+## Branch layout
 
-| Pattern | Description |
-|---------|-------------|
-| [Deterministic Tools](https://beogip.github.io/code-first-agents/patterns/deterministic-tools.html) | How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples. |
-| [Skill Orchestration](https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html) | How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle. |
+| File / folder | What it is |
+|---|---|
+| `index.html` | Landing page |
+| `index.md` | Markdown mirror of the landing for LLMs |
+| `patterns/*.html` | Pattern pages (Deterministic Tools, Skill Orchestration) |
+| `patterns/*.md` | Markdown mirrors of the pattern pages |
+| `assets/style.css` | Site styles |
+| `assets/website-copy.md` | Source-of-truth copy for all pages. Edit here first, then sync HTML + .md mirrors. |
+| `llms.txt` | Index for LLMs ([standard](https://llmstxt.org)) |
+| `.nojekyll` | Tell GitHub Pages not to process with Jekyll |
 
-## The spectrum
+## Editing the site
 
-Tools exist on a spectrum based on how much decision-making they absorb from the LLM:
-
-| Level | Tool returns | LLM does | Example |
-|-------|-------------|----------|---------|
-| **1. Data** | Structured facts | Interprets, decides | [`get-issue-signals.ts`](examples/tools/get-issue-signals.ts) |
-| **2. Classification** | Data + classification | Reads the class, branches | [`classify-issue.ts`](examples/tools/classify-issue.ts) |
-| **3. Instructions** | Literal procedure | Executes verbatim | [`analyze-issue.ts`](examples/tools/analyze-issue.ts) |
-
-At Level 3, the tool becomes a prompt factory. The LLM is a pure executor.
-
-## Examples
-
-The [`examples/`](examples/) directory contains a complete GitHub issue planning workflow that demonstrates the three levels. All tools run with [Bun](https://bun.sh):
-
-```bash
-# Level 1: raw signals from the issue body
-bun examples/tools/get-issue-signals.ts --owner acme --repo app --issue 42
-
-# Level 2: deterministic classification
-bun examples/tools/classify-issue.ts --owner acme --repo app --issue 42
-
-# Level 3: complete planning procedure
-bun examples/tools/analyze-issue.ts --owner acme --repo app --issue 42
-```
-
-See [`examples/skills/plan-issue/SKILL.md`](examples/skills/plan-issue/SKILL.md) for a full skill that orchestrates `analyze-issue.ts` at Level 3.
-
-## Running the site locally
-
-The site is static HTML/CSS. Open `index.html` in a browser, or serve the root directory with any static file server:
-
-```bash
-bunx serve .
-# or
-python3 -m http.server
-```
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on proposing new patterns and adding examples.
+1. Edit `assets/website-copy.md` (source of truth)
+2. Sync the corresponding `index.html` / `patterns/*.html`
+3. Sync the corresponding `index.md` / `patterns/*.md`
+4. Commit and push — GitHub Pages rebuilds automatically
 
 ## License
 
 [MIT](LICENSE)
-
-## Author
-
-Built by [Juan Gipponi](https://www.linkedin.com/in/juan-gipponi). I'm a CTO at a tech agency where I lead a dev team and integrate AI into how we actually work. These are patterns I use in production every day.
