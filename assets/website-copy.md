@@ -194,6 +194,50 @@ A minimal tool: named params in, JSON out. Testable with any test runner. Debugg
 
 ---
 
+### Self-Describing Tools
+
+There's a gap in the pattern so far: how does the LLM know what the tool's output looks like?
+
+You can describe it in the skill. You can hardcode field names. But the moment the tool changes, the skill drifts and you find out at runtime, not at commit time. I added this after a tool changed its output and three skills broke silently.
+
+The fix is to let the tool describe itself. Every deterministic tool supports a `--schema` flag that prints its output contract:
+
+```bash
+$ bun tools/analyze-issue.ts --schema
+{"type":"object","properties":{"complexity":{"type":"string","enum":["lean","standard","full"]}, ...}}
+```
+
+The trick is where the schema comes from. It's not a separate file. It's not a doc comment. It's the same object the tool uses to validate its own output before printing.
+
+```typescript
+import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
+
+const Output = z.object({
+  complexity: z.enum(["lean", "standard", "full"]),
+  score: z.number().int().min(0).max(10),
+  instructions: z.string(),
+});
+
+const args = parseArgs(process.argv);
+
+if (args.schema) {
+  console.log(JSON.stringify(zodToJsonSchema(Output)));
+  process.exit(0);
+}
+
+const result = await analyze(args);
+console.log(JSON.stringify(Output.parse(result)));
+```
+
+One definition, three uses: it validates the output at runtime, it generates the schema on demand, and it types the code. The tool can't lie about its output shape because the shape IS the validator. If someone changes the output without updating the schema, the unit test that runs the tool against its own schema fails in CI.
+
+Python tools do the same with Pydantic. The pattern is framework-agnostic: any library that lets you define a schema once and use it for validation plus JSON Schema generation works.
+
+You pay a dependency (Zod or Pydantic). You get a contract the LLM can discover, a validator that enforces it, and a CI check that catches drift.
+
+---
+
 ### The Spectrum
 
 The same problem (deciding how to plan a GitHub issue) can be solved at three levels of sophistication. Each level moves more decision-making from the LLM to code.
