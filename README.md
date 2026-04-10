@@ -64,4 +64,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on proposing new patterns 
 
 ## Author
 
-Built by [Juan Gipponi](https://www.linkedin.com/in/juan-gipponi). I'm a CTO at a tech agency where I lead a dev team and integrate AI into how we actually work. These are patterns I use in production every day.
+Built by [Juan Gipponi](https://www.linkedin.com/in/juan-gipponi).
