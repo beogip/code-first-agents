@@ -125,8 +125,11 @@ Summarize the plan and ask the user to approve before coding.</code></div>
       <h2 class="section__title">Consuming Tool Output</h2>
       <div class="prose">
         <p>
-          How the skill consumes tool output depends on what the tool returns. The three
-          levels mirror the tool spectrum.
+          How the skill consumes tool output depends on what the tool returns. Because
+          every tool describes its own output shape (see
+          <a href="deterministic-tools.html#self-describing">Self-Describing Tools</a>),
+          the skill reads documented fields instead of guessing at them. The three levels
+          mirror the tool spectrum.
         </p>
       </div>
 

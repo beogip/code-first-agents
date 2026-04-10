@@ -374,7 +374,7 @@ The skill defines the _workflow_. The tools do the _work_. The LLM follows the w
 
 ### Consuming Tool Output
 
-How the skill consumes tool output depends on what the tool returns. The three levels mirror the tool spectrum.
+How the skill consumes tool output depends on what the tool returns. Because every tool describes its own output shape (see [Self-Describing Tools](/patterns/deterministic-tools)), the skill reads documented fields instead of guessing at them. The three levels mirror the tool spectrum.
 
 #### Level 1: Data. The LLM interprets.
 
