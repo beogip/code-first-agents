@@ -15,6 +15,8 @@ Code-First Agents is a set of patterns for moving decision-making out of the LLM
 | [Deterministic Tools](https://beogip.github.io/code-first-agents/patterns/deterministic-tools.html) | How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples. |
 | [Skill Orchestration](https://beogip.github.io/code-first-agents/patterns/skill-orchestration.html) | How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle. |
 
+For the formal specification of both patterns, including the contract, trade-offs, reference implementations, and evolution history, see [`specs/code-first-agents.md`](specs/code-first-agents.md).
+
 ## The spectrum
 
 Tools exist on a spectrum based on how much decision-making they absorb from the LLM:
