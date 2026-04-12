@@ -1,6 +1,6 @@
 ---
 name: ambiguous_threshold
-status: proposed
+status: accepted
 category: warning
 origin: retroactive
 proposed_at: 2026-04-11
@@ -64,7 +64,7 @@ Pattern 02 "No hidden logic" requires every decision a skill makes to be visible
 
 ## Reference implementation
 
-This heuristic already exists in `branch-scanner.ts` at `tools/branch-scanner.ts` lines 211 to 242, in the function `checkAmbiguousThreshold`. The regexes are:
+One known implementation detects this heuristic with three regex patterns applied per line:
 
 ```ts
 const vagueWords =
@@ -74,9 +74,9 @@ const nearConditional =
 const hasNumeric = /\b\d+\b|[><=!]+\s*\d|\bscore\b|\bthreshold\b/i;
 ```
 
-A finding is emitted when `vagueWords.test(line) && nearConditional.test(line) && !hasNumeric.test(line) && !isBinaryGate(line)`. The binary-gate allowlist lives in the same file at lines 123 to 143. The word list and the conditional list are scanner choices and belong to the reference implementation, not to the abstract description above.
+A finding is emitted when the line matches `vagueWords` and `nearConditional` but not `hasNumeric`, and is not covered by a binary-gate allowlist (halt conditions, typed comparisons). The word list and the conditional list are scanner choices. Other implementations can tune them to their domain.
 
-## Open questions
+## Design decisions
 
-- The vague-word list is hand-picked. Should the spec fix the list, or leave it to each scanner to tune?
-- "Advanced" and "basic" can appear in legitimate contexts (a glossary, a user-facing label). The scanner relies on proximity to a conditional keyword to filter these out. The spec should note that proximity is load-bearing.
+- The spec does not fix the vague-word list. Each scanner picks its own list. The words in the reference implementation (`complex`, `trivial`, `simple`, `large`, `small`, `many`, `few`, `significant`, `substantial`, `extensive`, `minimal`, `basic`, `advanced`) are an illustrative starting point, not normative.
+- A vague word alone is not a signal. The signal is the word appearing on the same line as a conditional keyword. Proximity is load-bearing: without it, a scanner would flag glossary entries, user-facing labels, and other legitimate uses of words like "basic" or "advanced".

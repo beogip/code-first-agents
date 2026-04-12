@@ -1,6 +1,6 @@
 ---
 name:         skipped_conditions
-status:       proposed
+status:       accepted
 category:     warning
 origin:       new-proposal
 proposed_at:  2026-04-11
@@ -66,11 +66,11 @@ Skipped conditions are the shape of a skill that was half-written and never clos
 
 Pattern 02 "No hidden logic" is the umbrella. Skipped conditions is a specific failure mode: the condition is visible, but the resolution is not. The invariant asks for every decision to be in the file. This heuristic asks for every conditional check to resolve to a branch that is also in the file.
 
-Skipped conditions is also the inverse of `branch-scanner.ts`'s existing `BINARY_GATE_PATTERNS` allowlist. Binary gates are the accept-list for `ambiguous_threshold`, the shapes that say "this is fine, the check has a terminal outcome". Skipped conditions fires when a check fails to match that allowlist and has no other resolution nearby. The two heuristics share the same allowlist from opposite sides.
+Skipped conditions is also the inverse of the binary-gate allowlist used by `ambiguous_threshold`. Binary gates are the accept-list: the shapes that say "this is fine, the check has a terminal outcome". Skipped conditions fires when a check fails to match that allowlist and has no other resolution nearby. The two heuristics share the same allowlist from opposite sides.
 
-## Open questions
+## Design decisions
 
-- The heuristic depends on the binary-gate allowlist that lives in the reference scanner. The spec should describe the shape of a terminal outcome (`halt`, `else`, `named anchor`) without pinning the allowlist, otherwise the heuristic is only meaningful inside `branch-scanner.ts`.
-- "Within the same section" is the scanner's notion of locality. A skill with very long sections can fail this heuristic even when the resolution lives three lines below in the next section. Should the spec name section boundaries as the unit of scope, or let each scanner pick?
-- Overlap with `ambiguous_threshold`: a bare `if` with a vague word fires both heuristics. The scanner should emit both findings, since the fixes are different (one asks for a numeric criterion, the other asks for a terminal outcome).
-- The binary-gate allowlist is a natural target for revision or rejection. If the pattern owner does not accept the allowlist as part of the spec, this heuristic becomes implementation-defined. In that case the proposal should be revised to describe terminal outcomes without referencing the allowlist by name.
+- The spec describes the shape of a terminal outcome (`halt`, `else`, `named anchor`, `skip to step N`) without pinning a specific allowlist. Each scanner builds its own allowlist of terminal patterns. This is consistent with how `ambiguous_threshold` handles its vague-word list.
+- The spec names "section" (## heading boundaries) as the suggested unit of scope for finding the resolution of a conditional. A scanner may use a wider window, but a resolution that lives in a different section is like an `else` in a different function: it is a design smell even if the scanner does not flag it.
+- When `skipped_conditions` and `ambiguous_threshold` both fire on the same line, the scanner emits both findings separately. The fixes are different: one asks for a numeric criterion, the other asks for a terminal outcome.
+- The heuristic does not depend on any specific allowlist. It depends on the concept of a terminal outcome. This makes it spec-level, not implementation-defined.

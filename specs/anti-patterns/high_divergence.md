@@ -1,6 +1,6 @@
 ---
 name:         high_divergence
-status:       proposed
+status:       accepted
 category:     warning
 origin:       retroactive
 proposed_at:  2026-04-11
@@ -35,23 +35,22 @@ When both counts pass a scanner-defined floor, the section is flagged.
 ```markdown
 ## Phase 3: write the plan
 
-1. Look at the issue size.
-2. If the issue is small:
-   - Skip the research phase
-   - Write a 3-step plan
-   - Mark it as "lean"
-3. Else if the issue is medium:
-   - Run the context collector
-   - Write a 5-step plan
-   - Mark it as "standard"
-4. Else if the issue is large:
-   - Run the context collector
-   - Run the architect agent
-   - Write a 7-step plan
-   - Mark it as "deep"
+1. Read the issue labels.
+2. If the label is `bug`:
+   - Reproduce the error locally
+   - Write a root-cause analysis
+   - Propose a fix with a test plan
+3. Else if the label is `feature`:
+   - Run the context collector on related modules
+   - Draft an interface contract
+   - Write an implementation plan with dependencies
+4. Else if the label is `refactor`:
+   - Map all call sites of the target function
+   - Score each call site for migration risk
+   - Write a migration plan ordered by risk
 ```
 
-Three paths, several substeps each, and the LLM decides the size. The three branches share work (context collector, plan writing, labeling) and will drift.
+Three paths with distinct procedures, and the LLM picks the path from a prose label. Each branch has several substeps that diverge completely. The section is large enough that keeping all three procedures in the skill invites drift; extracting the routing into a tool that returns instructions eliminates the branching.
 
 ## Example, GOOD
 
@@ -76,26 +75,21 @@ Pattern 02 also describes the three skill shapes (thick, branching, thin). High 
 
 ## Reference implementation
 
-This heuristic already exists in `branch-scanner.ts` at `tools/branch-scanner.ts` lines 247 to 292, in the function `checkHighDivergence`. The path detector is:
+One known implementation detects paths and substeps with two regex passes per section:
 
 ```ts
-if (/^\s*[-*]?\s*(?:\*\*)?(?:[Ii]f|[Ee]lse|[Oo]therwise)\b/.test(line)) {
-  pathCount++;
-  inPath = true;
-}
+// Path detector: lines that start a conditional branch
+/^\s*[-*]?\s*(?:\*\*)?(?:[Ii]f|[Ee]lse|[Oo]therwise)\b/
+
+// Substep detector: indented or numbered lines inside a path
+/^\s{2,}[-*]|\d+\.\s/
 ```
 
-The substep detector is:
+The finding fires when both counts pass a scanner-defined floor (one implementation uses 3 paths and 5 substeps). A section with few paths but many substeps, or many paths but few substeps, passes. The floors are scanner choices. Other implementations can pick different numbers based on the skills they audit.
 
-```ts
-if (inPath && /^\s{2,}[-*]|\d+\.\s/.test(line)) {
-  substepCount++;
-}
-```
+Some scanners combine this heuristic with `ambiguous_threshold` and `unconditional_spawn` into a composite score that fires a higher-severity finding. Composite scoring is an implementation choice, not part of this heuristic's abstract definition.
 
-The finding fires when `pathCount >= 3 && substepCount >= 5`. These floors are scanner choices and belong to the reference implementation, not to the abstract description above. A section with 3 paths and 4 substeps passes, a section with 2 paths and 10 substeps passes. Both cases feed into the composite "high_branching_complexity" score at lines 411 to 445, which fires at a cumulative score of 7.
+## Design decisions
 
-## Open questions
-
-- The floors (3 paths, 5 substeps) are scanner choices. The spec names the shape of the signal, not the numbers. Does the spec stay silent on the numbers, or name a default pair that other scanners adopt?
-- Composite scoring lets this heuristic combine with `ambiguous_threshold` and `unconditional_spawn` to produce a higher-severity finding. Should the spec describe the composite score, or treat it as a reference-implementation detail?
+- The spec stays silent on numeric floors. Each scanner picks its own thresholds for path count and substep count. The reference implementation section gives one example pair as a starting point, not as a default.
+- Composite scoring (combining this heuristic with others to produce a higher-severity finding) is an implementation detail. The spec does not define it.

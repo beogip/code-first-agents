@@ -19,21 +19,22 @@ Each proposal has a `status:` field in its frontmatter. The index below groups p
 
 Heuristics submitted and waiting for pattern-owner review.
 
-- [ambiguous_threshold](./ambiguous_threshold.md), vague words like `complex` or `many` used near conditionals without numeric criteria. (retroactive)
-- [high_divergence](./high_divergence.md), a section with many conditional paths and many substeps that should be extracted into a Level 3 tool. (retroactive)
-- [unconditional_spawn](./unconditional_spawn.md), agent spawning inside multi-path sections without a complexity gate. (retroactive)
-- [instruction_bleeding](./instruction_bleeding.md), steps from one conditional branch contaminating another branch block.
-- [skipped_conditions](./skipped_conditions.md), a required decision point silently skipped instead of gated to a terminal outcome.
-- [scope_creep](./scope_creep.md), a tool modifying files outside its declared input scope.
-- [missing_termination](./missing_termination.md), retry or loop language with no hard termination condition.
+
+
+
 
 ### Accepted
 
-Heuristics the pattern owner has accepted into the spec. Empty for now.
+- [ambiguous_threshold](./ambiguous_threshold.md), vague words like `complex` or `many` used near conditionals without numeric criteria. (retroactive)
+- [high_divergence](./high_divergence.md), a section with many conditional paths and many substeps that should be extracted into a Level 3 tool. (retroactive)
+- [instruction_bleeding](./instruction_bleeding.md), steps from one conditional branch contaminating another branch block.
+- [missing_termination](./missing_termination.md), retry or loop language with no hard termination condition.
+- [skipped_conditions](./skipped_conditions.md), a required decision point silently skipped instead of gated to a terminal outcome.
+- [unconditional_spawn](./unconditional_spawn.md), agent spawning inside multi-path sections without a complexity gate. (retroactive)
 
 ### Rejected
 
-Heuristics the pattern owner has rejected. Rejection rationale lives inside each file in the "Rejection rationale" section. Empty for now.
+- [scope_creep](./scope_creep.md), a tool modifying files outside its declared input scope. Rejected: requires runtime data and a spec change (`writes:` field) to work as a static check, and is already covered by Pattern 01 "Isolation".
 
 ### Local-only
 
@@ -51,6 +52,14 @@ Two checks already exist in some scanners but are not proposed as heuristics her
 - **`missing_instructions`** (tool output interpreted by the LLM instead of executed verbatim), covered by Pattern 02 "Verbatim execution at L3".
 
 Do not re-propose these as standalone heuristics. If a scanner needs to flag them, it enforces the existing invariants.
+
+## Severity categories
+
+The `category:` frontmatter field defines the severity of the heuristic. Scanners use these levels to decide how to surface findings:
+
+- **`error`**, the scanner should block or fail CI. The anti-pattern is a correctness or cost bug, not a style issue.
+- **`warning`**, the scanner reports the finding but does not block. The anti-pattern hurts reliability but is not immediately dangerous.
+- **`suggestion`**, the finding is optional. The anti-pattern is a missed opportunity, not a defect.
 
 ## Origin tags
 

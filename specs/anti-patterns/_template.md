@@ -18,7 +18,7 @@ How to use it:
 Frontmatter fields:
   name         snake_case slug, matches the filename
   status       proposed | accepted | rejected | local-only | revised
-  category     warning | suggestion | error
+  category     error (block CI) | warning (report, don't block) | suggestion (optional)
   origin       retroactive (already in some scanner code) | new-proposal
   proposed_at  YYYY-MM-DD the proposal was first written
 

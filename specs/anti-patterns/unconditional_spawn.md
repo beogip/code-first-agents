@@ -1,6 +1,6 @@
 ---
 name:         unconditional_spawn
-status:       proposed
+status:       accepted
 category:     suggestion
 origin:       retroactive
 proposed_at:  2026-04-11
@@ -71,29 +71,26 @@ Pattern 02 "No hidden logic" is the closest overlap. Gateless spawning hides the
 
 ## Reference implementation
 
-This heuristic already exists in `branch-scanner.ts` at `tools/branch-scanner.ts` lines 297 to 348, in the function `checkUnconditionalSpawn`. The path floor is 3. The spawn patterns are:
+One known implementation detects spawn lines with these patterns:
 
 ```ts
-const spawnPatterns = [
-  /\b[Ss]pawn\b.*\bagent\b/,
-  /\b[Ll]aunch\b.*\bagent\b/,
-  /\bagent\b.*\bin\s+parallel\b/i,
-  /\bAgent\s*\(/,
-  /\bBlue\s*Team\b.*\bRed\s*Team\b/i,
-];
+/\b[Ss]pawn\b.*\bagent\b/
+/\b[Ll]aunch\b.*\bagent\b/
+/\bagent\b.*\bin\s+parallel\b/i
+/\bAgent\s*\(/
+/\bBlue\s*Team\b.*\bRed\s*Team\b/i
 ```
 
-The gate check looks at the 3 lines immediately before a spawn line:
+For each spawn line, the scanner checks the lines immediately before it for a complexity gate:
 
 ```ts
-const hasGate =
-  /\b(?:score|threshold|level|complexity)\s*[><=!]+\s*\d/i.test(context) ||
-  /\b(?:only\s+if|only\s+when|gated\s+by)\b/i.test(context);
+/\b(?:score|threshold|level|complexity)\s*[><=!]+\s*\d/i
+/\b(?:only\s+if|only\s+when|gated\s+by)\b/i
 ```
 
-The floors (3 paths, 3 lines of lookback) and the specific word lists are scanner choices and belong to the reference implementation, not to the abstract description above.
+The path floor, the lookback window size, and the specific word lists are scanner choices. Other implementations can adapt the vocabulary and the window to their domain. The spec describes the gate as "the nearest preceding condition that ties the spawn to a measured threshold", not a fixed line count.
 
-## Open questions
+## Design decisions
 
-- The spawn vocabulary is English-only and hand-picked. Skills written in other vocabularies (tool invocation lines that spawn agents implicitly through a helper function) are not caught. Should the spec describe a broader signal, or leave the vocabulary to each scanner?
-- The 3-line lookback window is a scanner choice. Multi-line list structures can push a legitimate gate out of the window. The spec should describe the gate as "the nearest preceding branch condition", not a fixed line count.
+- The spec describes the form of the signal ("lines that spawn or launch a subagent") without fixing a vocabulary list. Each scanner picks its own spawn keywords. The reference implementation gives one English-only word list as an illustrative starting point.
+- The spec describes the gate as "the nearest preceding condition that ties the spawn to a measured threshold", not a fixed line count. Each scanner picks its own lookback strategy. A fixed window is one valid approach; walking backward to the nearest conditional is another.

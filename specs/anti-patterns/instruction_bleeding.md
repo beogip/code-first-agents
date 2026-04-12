@@ -1,6 +1,6 @@
 ---
 name:         instruction_bleeding
-status:       proposed
+status:       accepted
 category:     warning
 origin:       new-proposal
 proposed_at:  2026-04-11
@@ -74,8 +74,8 @@ Pattern 02 "No hidden logic" asks that every decision be visible in the skill. I
 
 This heuristic is also the branch-level cousin of `high_divergence`. Divergence is about size (too many paths, too many substeps). Bleeding is about overlap (branches that share text they should not share).
 
-## Open questions
+## Design decisions
 
-- Detection is expensive. Comparing every pair of branch blocks in a section for shared lines is `O(n^2)` in the number of branches. Most sections have two or three branches, so the cost is small in practice, but the spec should note the cost.
-- The "same as the full branch, step 4" false-positive guard is a natural-language check. Scanners will implement it with a regex and will miss some phrasings. The spec should describe the intent (explicit cross-reference) rather than pinning a specific phrase.
-- Overlap with `skipped_conditions`: a branch that bleeds into another can look like a branch that forgot its own steps. The two heuristics should emit separate findings when they both fire, so the scanner output is not ambiguous.
+- The spec does not note algorithmic cost. Comparing branch blocks for shared lines is O(n^2) in branches, but sections rarely have more than two or three branches, so the cost is negligible in practice. Scanner performance is an implementation concern.
+- The cross-reference false-positive guard describes intent, not a specific phrase. The spec says "the branch explicitly references a sibling branch". Each scanner picks its own regex to detect this. False positives from missed phrasings are acceptable because the cost of a false positive is low: the reviewer sees the finding and dismisses it.
+- When `instruction_bleeding` and `skipped_conditions` both fire on the same section, the scanner emits both findings separately. The fixes are different: bleeding is fixed by hoisting shared steps, skipped conditions is fixed by adding a terminal outcome.

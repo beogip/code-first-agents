@@ -1,6 +1,6 @@
 ---
 name:         missing_termination
-status:       proposed
+status:       accepted
 category:     error
 origin:       new-proposal
 proposed_at:  2026-04-11
@@ -48,9 +48,9 @@ If none of these appear, a finding is emitted.
 ```markdown
 ## Phase 4: fix errors
 
-1. Run `bun tools/fix-loop-guard.ts init --max-rounds 2`.
+1. Run `bun tools/loop-guard.ts init --max-rounds 2`.
 2. Run the test suite.
-3. If any test fails, fix the failing test and run `bun tools/fix-loop-guard.ts advance`. Read the `should_continue` field.
+3. If any test fails, fix the failing test and run `bun tools/loop-guard.ts advance`. Read the `should_continue` field.
 4. If `should_continue` is true, loop back to step 2. Otherwise, STOP and report `loop_exhausted`.
 ```
 
@@ -66,8 +66,8 @@ Pattern 02 "No hidden state" says a skill that depends on memory between runs is
 
 Pattern 02 "Verbatim execution at L3" is also relevant. A Level 3 skill that consumes a tool which owns the termination counter is the canonical shape for a bounded loop: the tool tells the skill whether to continue, and the skill follows verbatim. This heuristic is the forcing function for that shape whenever a skill has any loop language.
 
-## Open questions
+## Design decisions
 
-- "Max rounds" is language tied to the reference implementation (kael.factory's `fix-loop-guard.ts`). Other codebases call it "attempts", "iterations", "budget". The spec should describe the shape (numeric ceiling, visible in the file or in a tool) rather than pinning specific vocabulary.
-- Overlap with `unconditional_spawn`: both heuristics are about cost discipline. Unconditional spawn is about a single expensive action without a gate. Missing termination is about a repeated cheap action without a cap. The two should emit separate findings when they both fire.
-- The category is `error` rather than `warning`, because an unbounded loop is not a stylistic issue, it is a cost bug. The pattern owner should decide whether the spec recognizes categories as severity levels or only as labels.
+- The spec describes the shape of a termination condition (a numeric ceiling visible in the file or owned by a tool) without pinning vocabulary. "Max rounds", "attempts", "iterations", "budget" are all valid names. Each scanner picks its own keyword list.
+- When `missing_termination` and `unconditional_spawn` both fire on the same section, the scanner emits both findings separately. Unconditional spawn is about a single expensive action without a gate. Missing termination is about a repeated action without a cap. The fixes are different.
+- The category is `error`. The spec defines categories as severity levels: `error` means the scanner should block or fail CI, `warning` means the scanner reports but does not block, `suggestion` means the finding is optional. An unbounded loop is a cost bug, not a stylistic issue.

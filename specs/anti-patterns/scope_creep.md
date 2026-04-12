@@ -1,6 +1,6 @@
 ---
 name:         scope_creep
-status:       proposed
+status:       rejected
 category:     suggestion
 origin:       new-proposal
 proposed_at:  2026-04-11
@@ -63,9 +63,12 @@ Pattern 01 "Isolation" says a tool runs without knowing which skill called it, a
 
 Pattern 01 "Purity" says a tool that calls a language model is not a deterministic tool. Scope creep is the filesystem analogue: a tool whose write surface depends on repo state the caller has not measured is not deterministic in a useful sense. Two runs on the same input can touch different files if the repo changed between runs.
 
-## Open questions
+## Rejection rationale
 
-- The static signal depends on a new tool frontmatter field, `writes:`. The spec does not define this field today. Accepting this heuristic means adding the field to Pattern 01's tool contract, or accepting that the heuristic is only testable with a prose-level signal until a field is defined.
-- `writes:` can be a path glob, a file list, or a predicate (`writes only to files already staged`). The spec should pick one shape. A glob is the simplest, a predicate is the most expressive.
-- The prose signal is a fallback and should not catch legitimate tools that honestly document their side effects. "Also updates the cache" is different from "modifies unrelated files". The word list needs tuning.
-- Overlap with the existing isolation invariant: the pattern owner may decide that scope creep is already covered by "Isolation" and that the heuristic is not needed as a separate entry. In that case, the proposal should be downgraded to an example of an isolation violation rather than a standalone heuristic.
+This heuristic does not fit as a static scanner check alongside the other heuristics in this registry. Three reasons:
+
+1. **Requires a spec change to work.** The static signal depends on a `writes:` tool frontmatter field that Pattern 01 does not define. Without the field, only the prose signal remains, and a prose signal alone is too weak to justify a heuristic.
+2. **Requires runtime data, not static analysis.** The other six heuristics scan the text of a SKILL.md file. This one needs to compare declared writes against actual writes, which is a runtime check, not a static one. It belongs in a different category of tooling (a test harness or CI gate, not a skill scanner).
+3. **Already covered by Pattern 01 "Isolation".** The invariant says a tool runs without reading surrounding context. Scope creep is the write-side analogue of the same principle. Adding a standalone heuristic does not add detection power beyond enforcing the existing invariant.
+
+The concept is valid. If a `writes:` field is added to the tool contract in a future spec revision, this proposal can be reconsidered.
