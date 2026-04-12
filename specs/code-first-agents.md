@@ -191,6 +191,12 @@ The level of the tool decides the shape of the skill.
 - **Verbatim execution at L3.** When a skill consumes an L3 tool, it does not modify, skip, add steps, or override tool decisions. It follows the instructions literally. No probabilistic branching. The LLM is an executor, nothing more.
 - **No hidden state.** A skill that depends on memory between runs is a different pattern. Skills run from their first phase every time.
 
+### Anti-patterns
+
+Invariants describe what a healthy skill looks like. Anti-patterns describe the shapes we see when a skill drifts away from them. We keep a registry of heuristics, one per anti-pattern shape, that scanners can use to flag a skill during review.
+
+The registry lives in [`anti-patterns/`](./anti-patterns/). Each heuristic has its own file with a detection signal, false-positive guards, a good and a bad example, and the invariant it relates to. See [`anti-patterns/README.md`](./anti-patterns/README.md) for the index and [`../CONTRIBUTING.md`](../CONTRIBUTING.md) for the proposal flow.
+
 ### Trade-offs
 
 **Upside.** The whole workflow sits in one readable file. Tools are independently verifiable, so the skill inherits their reliability. We can audit, review, and version a skill the same way we version code. Swapping a tool swaps a subsystem, with no prose rewriting required.
@@ -218,6 +224,22 @@ Three principles hold the pattern together.
 ## Evolution
 
 This section tracks meaningful changes to the patterns over time. Entries are chronological, newest first.
+
+### 2026-04-11, Anti-patterns registry
+
+Introduces an anti-patterns registry at `specs/anti-patterns/`. The registry holds one markdown file per heuristic, with a template file (`_template.md`) that contributors copy to propose new heuristics and a README index grouped by status (proposed, accepted, rejected, local-only, revised).
+
+**Seed proposals (seven, all with status `proposed`):**
+
+- **Retroactive** (already in `branch-scanner.ts`, validated against the spec shape): `ambiguous_threshold`, `high_divergence`, `unconditional_spawn`.
+- **New**: `instruction_bleeding`, `skipped_conditions`, `scope_creep`, `missing_termination`.
+
+**Process changes:**
+
+- `CONTRIBUTING.md` gains a "Proposing a heuristic" section. New heuristics land in the spec before any scanner code is written. Retroactive heuristics validate the scanner's shape against the abstract description.
+- Pattern 02 gains an "Anti-patterns" subsection pointing to the registry. Invariants describe the healthy shape; the registry describes the shapes we see when a skill drifts.
+
+**Out of scope for the seed registry:** `prose_conditional` and `missing_instructions` are not proposed as standalone heuristics because they map directly to Pattern 02 "No hidden logic" and "Verbatim execution at L3" respectively. The registry README names them so they are not re-proposed.
 
 ### 2026-04-10, Initial spec
 
