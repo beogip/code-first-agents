@@ -20,9 +20,9 @@ Move deterministic work from the LLM to code.
 
 The LLM picks the wrong branch. It skips a step. It hallucinates a field name. You can't write a test for any of it because the decision happened inside a black box.
 
-I've watched agents route tickets correctly most of the time. Then quietly misclassify a bug as a feature request, trigger the wrong workflow, and nobody notices for hours. The failure mode isn't a crash. It's a silent wrong answer.
+I've watched agents route tickets correctly most of the time. Then quietly misclassify a bug as a feature request, trigger the wrong workflow, and go unnoticed for hours. The failure mode isn't a crash. It's a silent wrong answer.
 
-I kept throwing tokens at the problem: longer prompts, more examples, chain-of-thought. It got marginally better. Never consistent. At some point I started moving the deterministic parts into code, and things stopped being a mystery.
+I kept throwing tokens at the problem: longer prompts, more examples, chain-of-thought. Things got marginally better. Never consistent. Eventually I started moving the deterministic parts into code, and the mystery went away.
 
 The issue isn't that LLMs are bad. It's that we're asking them to do work that code should do.
 
@@ -34,7 +34,7 @@ Moving decisions from the LLM to code changes three things at once.
 
 Code doesn't drift. Same input, same output. No prompt sensitivity, no temperature variance, no "it worked yesterday." That alone is worth it.
 
-It's also cheaper. A routing decision that runs as a local script instead of a chain-of-thought call costs a fraction of the tokens. And it's faster: a function runs in milliseconds where an LLM call takes seconds. Chain four decisions and the difference compounds.
+It's also cheaper. A routing decision that runs as a local script costs a fraction of the tokens compared to a chain-of-thought call. And it's faster: a function runs in milliseconds where an LLM call takes seconds. Chain four decisions and the difference compounds.
 
 The question isn't whether your agent uses tools. It's how much decision-making lives inside those tools vs inside the LLM.
 
@@ -84,11 +84,11 @@ Tool returns: { "complexity": "standard", "instructions": "## Step 1: Read the i
 LLM does: executes the instructions exactly as written. Zero branching.
 ```
 
-At Level 3, the tool becomes a prompt factory. It generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
+At Level 3, the tool becomes a prompt factory — it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
 
 This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
 
-I built kael.factory, a plugin generator for Claude Code, using these exact patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
+I built kael.factory, a plugin generator for Claude Code, using exactly these patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
 
 ---
 
