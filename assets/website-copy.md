@@ -84,7 +84,7 @@ Tool returns: { "complexity": "standard", "instructions": "## Step 1: Read the i
 LLM does: executes the instructions exactly as written. Zero branching.
 ```
 
-At Level 3, the tool becomes a prompt factory — it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
+At Level 3, the tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
 
 This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
 
