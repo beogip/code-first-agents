@@ -98,10 +98,10 @@
           The LLM picks the wrong branch. It skips a step. It hallucinates a field name. You can't write a test for any of it because the decision happened inside a black box.
         </p>
         <p>
-          I've watched agents route tickets correctly most of the time. Then quietly misclassify a bug as a feature request, trigger the wrong workflow, and nobody notices for hours. The failure mode isn't a crash. It's a silent wrong answer.
+          I've watched agents route tickets correctly most of the time. Then quietly misclassify a bug as a feature request, trigger the wrong workflow, and go unnoticed for hours. The failure mode isn't a crash. It's a silent wrong answer.
         </p>
         <p>
-          I kept throwing tokens at the problem: longer prompts, more examples, chain-of-thought. It got marginally better. Never consistent. At some point I started moving the deterministic parts into code, and things stopped being a mystery.
+          I kept throwing tokens at the problem: longer prompts, more examples, chain-of-thought. Things got marginally better. Never consistent. Eventually I started moving the deterministic parts into code, and the mystery went away.
         </p>
         <p>
           The issue isn't that LLMs are bad. It's that we're asking them to do work that code should do.
@@ -128,7 +128,7 @@
           <div class="pillar__num">02</div>
           <div class="pillar__content">
             <div class="pillar__label">Cost</div>
-            <div class="pillar__text">A routing decision that runs as a local script instead of a chain-of-thought call costs a fraction of the tokens.</div>
+            <div class="pillar__text">A routing decision that runs as a local script costs a fraction of the tokens compared to a chain-of-thought call.</div>
           </div>
         </div>
         <div class="pillar">
@@ -250,13 +250,13 @@
 
       <div class="prose" style="margin-top: 32px;">
         <p>
-          At Level 3, the tool becomes a prompt factory. It generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
+          At Level 3, the tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
         </p>
         <p>
           This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
         </p>
         <p>
-          I built kael.factory, a plugin generator for Claude Code, using these exact patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
+          I built kael.factory, a plugin generator for Claude Code, using exactly these patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
         </p>
       </div>
     </section>
