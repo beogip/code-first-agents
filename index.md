@@ -77,12 +77,6 @@ This inverts the usual tool-use pattern. Instead of the LLM using tools to help 
 
 I built kael.factory, a plugin generator for Claude Code, using these exact patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
 
-## Who
-
-I'm Juan Gipponi. CTO at a tech agency, where I lead a dev team and integrate AI into how we actually work. Everything on this site is what I use in production.
-
-[LinkedIn](https://www.linkedin.com/in/juan-gipponi)
-
 ## Pattern Catalogue
 
 - **[Deterministic Tools](patterns/deterministic-tools.md)** — How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples.
