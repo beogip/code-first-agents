@@ -1,424 +1,591 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Primary -->
-  <title>Code-First Agents | Design Patterns for Reliable AI Agents</title>
-  <meta name="description" content="Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The LLM orchestrates. Code executes.">
-  <meta name="keywords" content="AI agents, LLM, design patterns, deterministic tools, skill orchestration, Claude, Anthropic, agent architecture, reliable AI, code-first">
-  <meta name="author" content="Juan Gipponi">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0a0a0f">
-  <link rel="canonical" href="https://beogip.github.io/code-first-agents/">
+    <!-- Primary -->
+    <title>Code-First Agents | Design Patterns for Reliable AI Agents</title>
+    <meta
+      name="description"
+      content="Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The LLM orchestrates. Code executes."
+    />
+    <meta
+      name="keywords"
+      content="AI agents, LLM, design patterns, deterministic tools, skill orchestration, Claude, Anthropic, agent architecture, reliable AI, code-first"
+    />
+    <meta name="author" content="Juan Gipponi" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="canonical" href="https://beogip.github.io/code-first-agents/" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://beogip.github.io/code-first-agents/">
-  <meta property="og:title" content="Code-First Agents — Design Patterns for Reliable AI Agents">
-  <meta property="og:description" content="Move deterministic work from the LLM to code. Build agents that are testable, fast, and predictable.">
-  <meta property="og:image" content="https://beogip.github.io/code-first-agents/assets/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="Code-First Agents">
-  <meta property="og:locale" content="en_US">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://beogip.github.io/code-first-agents/"
+    />
+    <meta
+      property="og:title"
+      content="Code-First Agents — Design Patterns for Reliable AI Agents"
+    />
+    <meta
+      property="og:description"
+      content="Move deterministic work from the LLM to code. Build agents that are testable, fast, and predictable."
+    />
+    <meta
+      property="og:image"
+      content="https://beogip.github.io/code-first-agents/assets/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Code-First Agents" />
+    <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://beogip.github.io/code-first-agents/">
-  <meta name="twitter:title" content="Code-First Agents — Design Patterns for Reliable AI Agents">
-  <meta name="twitter:description" content="Move deterministic work from the LLM to code. Build agents that are testable, fast, and predictable.">
-  <meta name="twitter:image" content="https://beogip.github.io/code-first-agents/assets/og-image.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:url"
+      content="https://beogip.github.io/code-first-agents/"
+    />
+    <meta
+      name="twitter:title"
+      content="Code-First Agents — Design Patterns for Reliable AI Agents"
+    />
+    <meta
+      name="twitter:description"
+      content="Move deterministic work from the LLM to code. Build agents that are testable, fast, and predictable."
+    />
+    <meta
+      name="twitter:image"
+      content="https://beogip.github.io/code-first-agents/assets/og-image.png"
+    />
 
-  <!-- Assets -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="alternate" type="text/markdown" href="index.md" title="Markdown version for LLMs">
+    <!-- Assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="index.md"
+      title="Markdown version for LLMs"
+    />
 
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Code-First Agents",
-    "url": "https://beogip.github.io/code-first-agents/",
-    "description": "Design patterns for building reliable AI agents by moving deterministic work from the LLM to code.",
-    "inLanguage": "en",
-    "author": {
-      "@type": "Person",
-      "name": "Juan Gipponi",
-      "url": "https://www.linkedin.com/in/juan-gipponi",
-      "sameAs": [
-        "https://github.com/beogip",
-        "https://www.linkedin.com/in/juan-gipponi"
-      ]
-    },
-    "license": "https://opensource.org/licenses/MIT"
-  }
-  </script>
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Code-First Agents",
+        "url": "https://beogip.github.io/code-first-agents/",
+        "description": "Design patterns for building reliable AI agents by moving deterministic work from the LLM to code.",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "Juan Gipponi",
+          "url": "https://www.linkedin.com/in/juan-gipponi",
+          "sameAs": [
+            "https://github.com/beogip",
+            "https://www.linkedin.com/in/juan-gipponi"
+          ]
+        },
+        "license": "https://opensource.org/licenses/MIT"
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="./" class="sidebar__title">Code-First<br />Agents</a>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="patterns/deterministic-tools.html">Deterministic Tools</a>
+        </li>
+        <li>
+          <a href="patterns/skill-orchestration.html">Skill Orchestration</a>
+        </li>
+      </ul>
+    </aside>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c5f35745029247ea830c902014c4ee36"}'></script>
-</head>
-<body>
+    <!-- Main Content -->
+    <div class="main">
+      <div class="content">
+        <!-- Hero -->
+        <section class="hero">
+          <div class="hero__label">Design Patterns for AI Agents</div>
+          <h1 class="hero__title">
+            <span class="hero__title-dark">Code-First </span
+            ><span class="hero__title-cyan">Agents</span>
+          </h1>
+          <div class="hero__line"></div>
+          <p class="hero__subtitle">
+            Your agent works. Until it doesn't. And you can't tell why. Move
+            deterministic work from the LLM to code.
+          </p>
+        </section>
 
-<!-- Sidebar -->
-<aside class="sidebar">
-  <a href="./" class="sidebar__title">Code-First<br>Agents</a>
-  <ul class="sidebar__nav">
-    <li><a href="patterns/deterministic-tools.html">Deterministic Tools</a></li>
-    <li><a href="patterns/skill-orchestration.html">Skill Orchestration</a></li>
-  </ul>
-</aside>
-
-<!-- Main Content -->
-<div class="main">
-  <div class="content">
-
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero__label">Design Patterns for AI Agents</div>
-      <h1 class="hero__title">
-        <span class="hero__title-dark">Code-First </span><span class="hero__title-cyan">Agents</span>
-      </h1>
-      <div class="hero__line"></div>
-      <p class="hero__subtitle">Your agent works. Until it doesn't. And you can't tell why. Move deterministic work from the LLM to code.</p>
-    </section>
-
-    <!-- The Problem -->
-    <section class="section" id="problem">
-      <div class="section__marker">Problem</div>
-      <h2 class="section__title">The Problem</h2>
-      <div class="prose">
-        <p>
-          The LLM picks the wrong branch. It skips a step. It hallucinates a field name. You can't write a test for any of it because the decision happened inside a black box.
-        </p>
-        <p>
-          I've watched agents route tickets correctly most of the time. Then quietly misclassify a bug as a feature request, trigger the wrong workflow, and go unnoticed for hours. The failure mode isn't a crash. It's a silent wrong answer.
-        </p>
-        <p>
-          I kept throwing tokens at the problem: longer prompts, more examples, chain-of-thought. Things got marginally better. Never consistent. Eventually I started moving the deterministic parts into code, and the mystery went away.
-        </p>
-        <p>
-          The issue isn't that LLMs are bad. It's that we're asking them to do work that code should do.
-        </p>
-      </div>
-    </section>
-
-    <!-- The Thesis -->
-    <section class="section" id="thesis">
-      <div class="section__marker">Thesis</div>
-      <h2 class="section__title">The Thesis</h2>
-
-      <div class="emphasis">Moving decisions from the LLM to code changes three things at once.</div>
-
-      <div class="pillars">
-        <div class="pillar">
-          <div class="pillar__num">01</div>
-          <div class="pillar__content">
-            <div class="pillar__label">Reliability</div>
-            <div class="pillar__text">Code doesn't drift. Same input, same output. No prompt sensitivity, no temperature variance, no "it worked yesterday."</div>
+        <!-- The Problem -->
+        <section class="section" id="problem">
+          <div class="section__marker">Problem</div>
+          <h2 class="section__title">The Problem</h2>
+          <div class="prose">
+            <p>
+              The LLM picks the wrong branch. It skips a step. It hallucinates a
+              field name. You can't write a test for any of it because the
+              decision happened inside a black box.
+            </p>
+            <p>
+              I've watched agents route tickets correctly most of the time. Then
+              quietly misclassify a bug as a feature request, trigger the wrong
+              workflow, and go unnoticed for hours. The failure mode isn't a
+              crash. It's a silent wrong answer.
+            </p>
+            <p>
+              I kept throwing tokens at the problem: longer prompts, more
+              examples, chain-of-thought. Things got marginally better. Never
+              consistent. Eventually I started moving the deterministic parts
+              into code, and the mystery went away.
+            </p>
+            <p>
+              The issue isn't that LLMs are bad. It's that we're asking them to
+              do work that code should do.
+            </p>
           </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar__num">02</div>
-          <div class="pillar__content">
-            <div class="pillar__label">Cost</div>
-            <div class="pillar__text">A routing decision that runs as a local script costs a fraction of the tokens compared to a chain-of-thought call.</div>
+        </section>
+
+        <!-- The Thesis -->
+        <section class="section" id="thesis">
+          <div class="section__marker">Thesis</div>
+          <h2 class="section__title">The Thesis</h2>
+
+          <div class="emphasis">
+            Moving decisions from the LLM to code changes three things at once.
           </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar__num">03</div>
-          <div class="pillar__content">
-            <div class="pillar__label">Speed</div>
-            <div class="pillar__text">A function runs in milliseconds where an LLM call takes seconds. Chain four decisions and the difference compounds.</div>
-          </div>
-        </div>
-      </div>
 
-      <div class="prose">
-        <p>
-          The question isn't whether your agent uses tools. It's <em>how much decision-making lives inside those tools vs inside the LLM</em>.
-        </p>
-        <p>
-          Most agents use tools to fetch data or take actions. The LLM still decides what to do. In a code-first agent, the <span class="highlight">tools handle the decision-making too</span>: they classify, they route, they assemble the procedure. The LLM calls the tool and follows whatever comes back. The more you push into code, the less you depend on probabilistic output for things that should be deterministic.
-        </p>
-      </div>
-
-      <div class="callout">
-        This aligns with how Anthropic thinks about it. In
-        <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a>,
-        they draw a line between workflows (code-driven, predefined paths) and agents (LLM-driven, open-ended).
-        Code-First Agents lives on the workflow side. Deterministic where possible, intelligent where necessary.
-      </div>
-    </section>
-
-    <!-- The Architecture -->
-    <section class="section" id="architecture">
-      <div class="section__marker">Architecture</div>
-      <h2 class="section__title">The Architecture</h2>
-      <div class="prose">
-        <p>Two components. One produces data, the other consumes it.</p>
-        <p>
-          <strong>Deterministic Tools</strong> are CLI scripts that take named parameters, do deterministic processing, and output JSON to stdout. They're testable, fast, and predictable. They produce structured data the LLM can consume.
-        </p>
-        <p>
-          <strong>Skills</strong> are markdown instruction files (SKILL.md) that the LLM follows step by step. They call tools via bash, read the JSON output, and tell the LLM what to do next. They're the orchestration layer.
-        </p>
-        <p>Tools do the heavy lifting. Skills wire them together into a workflow the LLM can follow.</p>
-      </div>
-    </section>
-
-    <!-- The Spectrum -->
-    <section class="section" id="spectrum">
-      <div class="section__marker">Spectrum</div>
-      <h2 class="section__title">The Spectrum</h2>
-      <div class="prose">
-        <p>Not all tools are equal. They exist on a spectrum based on how much decision-making they absorb from the LLM.</p>
-      </div>
-
-      <div class="spectrum">
-        <div class="spectrum-dot" id="spectrumDot"></div>
-
-        <!-- L1: Data -->
-        <div class="spectrum-step" data-level="1">
-          <div class="spectrum-step__center">
-            <div class="spectrum-step__tick"></div>
-          </div>
-          <div class="spectrum-step__card">
-            <div class="spectrum-step__content">
-              <div class="spectrum-step__header">
-                <span class="spectrum-step__level">L1</span>
-                <span class="spectrum-step__title">Data</span>
+          <div class="pillars">
+            <div class="pillar">
+              <div class="pillar__num">01</div>
+              <div class="pillar__content">
+                <div class="pillar__label">Reliability</div>
+                <div class="pillar__text">
+                  Code doesn't drift. Same input, same output. No prompt
+                  sensitivity, no temperature variance, no "it worked
+                  yesterday."
+                </div>
               </div>
-              <div class="spectrum-step__desc">The tool returns structured facts. The LLM interprets them and decides what to do.</div>
-              <div class="spectrum-step__json">{ "checkboxes": 3, "file_paths": 2, "code_blocks": 1 }</div>
-              <div class="spectrum-step__role">
-                <span class="spectrum-step__role-tag spectrum-step__role-tag--llm">LLM</span>
-                reads the signals, makes a judgment call
+            </div>
+            <div class="pillar">
+              <div class="pillar__num">02</div>
+              <div class="pillar__content">
+                <div class="pillar__label">Cost</div>
+                <div class="pillar__text">
+                  A routing decision that runs as a local script costs a
+                  fraction of the tokens compared to a chain-of-thought call.
+                </div>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar__num">03</div>
+              <div class="pillar__content">
+                <div class="pillar__label">Speed</div>
+                <div class="pillar__text">
+                  A function runs in milliseconds where an LLM call takes
+                  seconds. Chain four decisions and the difference compounds.
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- L2: Classification -->
-        <div class="spectrum-step spectrum-step--l2" data-level="2">
-          <div class="spectrum-step__center">
-            <div class="spectrum-step__tick"></div>
+          <div class="prose">
+            <p>
+              The question isn't whether your agent uses tools. It's
+              <em
+                >how much decision-making lives inside those tools vs inside the
+                LLM</em
+              >.
+            </p>
+            <p>
+              Most agents use tools to fetch data or take actions. The LLM still
+              decides what to do. In a code-first agent, the
+              <span class="highlight">tools handle the decision-making too</span
+              >: they classify, they route, they assemble the procedure. The LLM
+              calls the tool and follows whatever comes back. The more you push
+              into code, the less you depend on probabilistic output for things
+              that should be deterministic.
+            </p>
           </div>
-          <div class="spectrum-step__card">
-            <div class="spectrum-step__content">
-              <div class="spectrum-step__header">
-                <span class="spectrum-step__level">L2</span>
-                <span class="spectrum-step__title">Classification</span>
+
+          <div class="callout">
+            This aligns with how Anthropic thinks about it. In
+            <a
+              href="https://www.anthropic.com/research/building-effective-agents"
+              target="_blank"
+              rel="noopener"
+              >Building Effective Agents</a
+            >, they draw a line between workflows (code-driven, predefined
+            paths) and agents (LLM-driven, open-ended). Code-First Agents lives
+            on the workflow side. Deterministic where possible, intelligent
+            where necessary.
+          </div>
+        </section>
+
+        <!-- The Architecture -->
+        <section class="section" id="architecture">
+          <div class="section__marker">Architecture</div>
+          <h2 class="section__title">The Architecture</h2>
+          <div class="prose">
+            <p>Two components. One produces data, the other consumes it.</p>
+            <p>
+              <strong>Deterministic Tools</strong> are CLI scripts that take
+              named parameters, do deterministic processing, and output JSON to
+              stdout. They're testable, fast, and predictable. They produce
+              structured data the LLM can consume.
+            </p>
+            <p>
+              <strong>Skills</strong> are markdown instruction files (SKILL.md)
+              that the LLM follows step by step. They call tools via bash, read
+              the JSON output, and tell the LLM what to do next. They're the
+              orchestration layer.
+            </p>
+            <p>
+              Tools do the heavy lifting. Skills wire them together into a
+              workflow the LLM can follow.
+            </p>
+          </div>
+        </section>
+
+        <!-- The Spectrum -->
+        <section class="section" id="spectrum">
+          <div class="section__marker">Spectrum</div>
+          <h2 class="section__title">The Spectrum</h2>
+          <div class="prose">
+            <p>
+              Not all tools are equal. They exist on a spectrum based on how
+              much decision-making they absorb from the LLM.
+            </p>
+          </div>
+
+          <div class="spectrum">
+            <div class="spectrum-dot" id="spectrumDot"></div>
+
+            <!-- L1: Data -->
+            <div class="spectrum-step" data-level="1">
+              <div class="spectrum-step__center">
+                <div class="spectrum-step__tick"></div>
               </div>
-              <div class="spectrum-step__desc">The tool scores signals and classifies. It returns a complexity level. The skill branches on it.</div>
-              <div class="spectrum-step__json">{ "complexity": "standard", "score": 6 }</div>
-              <div class="spectrum-step__role">
-                <span class="spectrum-step__role-tag spectrum-step__role-tag--llm">LLM</span>
-                reads the complexity, follows the matching branch
+              <div class="spectrum-step__card">
+                <div class="spectrum-step__content">
+                  <div class="spectrum-step__header">
+                    <span class="spectrum-step__level">L1</span>
+                    <span class="spectrum-step__title">Data</span>
+                  </div>
+                  <div class="spectrum-step__desc">
+                    The tool returns structured facts. The LLM interprets them
+                    and decides what to do.
+                  </div>
+                  <div class="spectrum-step__json">
+                    { "checkboxes": 3, "file_paths": 2, "code_blocks": 1 }
+                  </div>
+                  <div class="spectrum-step__role">
+                    <span
+                      class="spectrum-step__role-tag spectrum-step__role-tag--llm"
+                      >LLM</span
+                    >
+                    reads the signals, makes a judgment call
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- L2: Classification -->
+            <div class="spectrum-step spectrum-step--l2" data-level="2">
+              <div class="spectrum-step__center">
+                <div class="spectrum-step__tick"></div>
+              </div>
+              <div class="spectrum-step__card">
+                <div class="spectrum-step__content">
+                  <div class="spectrum-step__header">
+                    <span class="spectrum-step__level">L2</span>
+                    <span class="spectrum-step__title">Classification</span>
+                  </div>
+                  <div class="spectrum-step__desc">
+                    The tool scores signals and classifies. It returns a
+                    complexity level. The skill branches on it.
+                  </div>
+                  <div class="spectrum-step__json">
+                    { "complexity": "standard", "score": 6 }
+                  </div>
+                  <div class="spectrum-step__role">
+                    <span
+                      class="spectrum-step__role-tag spectrum-step__role-tag--llm"
+                      >LLM</span
+                    >
+                    reads the complexity, follows the matching branch
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- L3: Instructions -->
+            <div class="spectrum-step spectrum-step--l3" data-level="3">
+              <div class="spectrum-step__center">
+                <div class="spectrum-step__tick"></div>
+              </div>
+              <div class="spectrum-step__card">
+                <div class="spectrum-step__content">
+                  <div class="spectrum-step__header">
+                    <span class="spectrum-step__level">L3</span>
+                    <span class="spectrum-step__title">Instructions</span>
+                  </div>
+                  <div class="spectrum-step__desc">
+                    The tool scores, classifies, and builds the complete
+                    procedure. The LLM follows it verbatim.
+                  </div>
+                  <div class="spectrum-step__json">
+                    { "complexity": "standard", "instructions": "## Step 1: Read
+                    the issue..." }
+                  </div>
+                  <div class="spectrum-step__role">
+                    <span
+                      class="spectrum-step__role-tag spectrum-step__role-tag--tool"
+                      >TOOL</span
+                    >
+                    decides everything. LLM executes verbatim. Zero branching.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- L3: Instructions -->
-        <div class="spectrum-step spectrum-step--l3" data-level="3">
-          <div class="spectrum-step__center">
-            <div class="spectrum-step__tick"></div>
+          <div class="prose" style="margin-top: 32px">
+            <p>
+              At Level 3, the tool becomes a prompt factory: it generates the
+              exact procedure the LLM should follow based on deterministic
+              analysis. The LLM just executes. All branching logic lives in code
+              you can test and debug.
+            </p>
+            <p>
+              This inverts the usual tool-use pattern. Instead of the LLM using
+              tools to help with its plan, the tool builds the plan and the LLM
+              carries it out.
+            </p>
+            <p>
+              I built kael.factory, a plugin generator for Claude Code, using
+              exactly these patterns. Every decision in the generation pipeline
+              runs on deterministic tools orchestrated by skills.
+            </p>
           </div>
-          <div class="spectrum-step__card">
-            <div class="spectrum-step__content">
-              <div class="spectrum-step__header">
-                <span class="spectrum-step__level">L3</span>
-                <span class="spectrum-step__title">Instructions</span>
+        </section>
+
+        <!-- Pattern Catalogue -->
+        <section class="section" id="patterns">
+          <div class="section__marker">Patterns</div>
+          <h2 class="section__title">Pattern Catalogue</h2>
+
+          <div class="cards">
+            <a href="patterns/deterministic-tools.html" class="card">
+              <div class="card__num">01</div>
+              <div class="card__title">Deterministic Tools</div>
+              <div class="card__text">
+                How to build CLI tools that do deterministic work and output
+                JSON. The tool contract, the output spectrum, and progressive
+                examples.
               </div>
-              <div class="spectrum-step__desc">The tool scores, classifies, and builds the complete procedure. The LLM follows it verbatim.</div>
-              <div class="spectrum-step__json">{ "complexity": "standard", "instructions": "## Step 1: Read the issue..." }</div>
-              <div class="spectrum-step__role">
-                <span class="spectrum-step__role-tag spectrum-step__role-tag--tool">TOOL</span>
-                decides everything. LLM executes verbatim. Zero branching.
+              <span class="card__link">Read pattern &rarr;</span>
+            </a>
+            <a href="patterns/skill-orchestration.html" class="card">
+              <div class="card__num">02</div>
+              <div class="card__title">Skill Orchestration</div>
+              <div class="card__text">
+                How to write SKILL.md files that consume tool output. The LLM as
+                executor, chaining tools, guards, and the verbatim execution
+                principle.
               </div>
+              <span class="card__link">Read pattern &rarr;</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- When to Go Code-First -->
+        <section class="section" id="criteria">
+          <div class="section__marker">When</div>
+          <h2 class="section__title">When to Go Code-First</h2>
+
+          <div class="prose">
+            <p>Not everything belongs in code.</p>
+          </div>
+
+          <div class="decision-grid">
+            <div class="decision-col decision-col--code">
+              <div class="decision-col__header">Move to code</div>
+              <ul>
+                <li>Computational logic</li>
+                <li>3+ divergent paths</li>
+                <li>Deterministic output</li>
+                <li>Silent failures are costly</li>
+              </ul>
+            </div>
+            <div class="decision-col decision-col--llm">
+              <div class="decision-col__header">Keep in LLM</div>
+              <ul>
+                <li>Needs judgment or creativity</li>
+                <li>Ambiguous input</li>
+                <li>Conversational context</li>
+                <li>Multi-source synthesis</li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="prose" style="margin-top: 32px;">
-        <p>
-          At Level 3, the tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
-        </p>
-        <p>
-          This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
-        </p>
-        <p>
-          I built kael.factory, a plugin generator for Claude Code, using exactly these patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
-        </p>
-      </div>
-    </section>
-
-    <!-- Pattern Catalogue -->
-    <section class="section" id="patterns">
-      <div class="section__marker">Patterns</div>
-      <h2 class="section__title">Pattern Catalogue</h2>
-
-      <div class="cards">
-        <a href="patterns/deterministic-tools.html" class="card">
-          <div class="card__num">01</div>
-          <div class="card__title">Deterministic Tools</div>
-          <div class="card__text">
-            How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples.
+          <div class="prose" style="margin-top: 24px">
+            <p>
+              Most real agents are a mix. The goal isn't to remove the LLM. It's
+              to stop wasting it on work that doesn't need intelligence.
+            </p>
           </div>
-          <span class="card__link">Read pattern &rarr;</span>
-        </a>
-        <a href="patterns/skill-orchestration.html" class="card">
-          <div class="card__num">02</div>
-          <div class="card__title">Skill Orchestration</div>
-          <div class="card__text">
-            How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle.
-          </div>
-          <span class="card__link">Read pattern &rarr;</span>
-        </a>
-      </div>
-    </section>
+        </section>
 
-    <!-- When to Go Code-First -->
-    <section class="section" id="criteria">
-      <div class="section__marker">When</div>
-      <h2 class="section__title">When to Go Code-First</h2>
-
-      <div class="prose">
-        <p>Not everything belongs in code.</p>
-      </div>
-
-      <div class="decision-grid">
-        <div class="decision-col decision-col--code">
-          <div class="decision-col__header">Move to code</div>
-          <ul>
-            <li>Computational logic</li>
-            <li>3+ divergent paths</li>
-            <li>Deterministic output</li>
-            <li>Silent failures are costly</li>
-          </ul>
+        <!-- Closing -->
+        <div class="closing">
+          <p class="closing__text">
+            Everything here is open source. Grab it, break it, adapt it:
+            <a
+              href="https://github.com/beogip/code-first-agents"
+              target="_blank"
+              rel="noopener"
+              >code-first-agents on GitHub</a
+            >
+          </p>
+          <p class="closing__text">
+            If you're building agents and want to talk about this stuff, I'm on
+            <a
+              href="https://www.linkedin.com/in/juan-gipponi"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >.
+          </p>
         </div>
-        <div class="decision-col decision-col--llm">
-          <div class="decision-col__header">Keep in LLM</div>
-          <ul>
-            <li>Needs judgment or creativity</li>
-            <li>Ambiguous input</li>
-            <li>Conversational context</li>
-            <li>Multi-source synthesis</li>
-          </ul>
-        </div>
-      </div>
 
-      <div class="prose" style="margin-top: 24px;">
-        <p>Most real agents are a mix. The goal isn't to remove the LLM. It's to stop wasting it on work that doesn't need intelligence.</p>
+        <!-- Footer -->
+        <footer class="footer">
+          <span>MIT License &middot; Juan Gipponi</span>
+          <a
+            href="https://github.com/beogip/code-first-agents"
+            target="_blank"
+            rel="noopener"
+            >GitHub &rarr;</a
+          >
+        </footer>
       </div>
-    </section>
-
-    <!-- Closing -->
-    <div class="closing">
-      <p class="closing__text">Everything here is open source. Grab it, break it, adapt it: <a href="https://github.com/beogip/code-first-agents" target="_blank" rel="noopener">code-first-agents on GitHub</a></p>
-      <p class="closing__text">If you're building agents and want to talk about this stuff, I'm on <a href="https://www.linkedin.com/in/juan-gipponi" target="_blank" rel="noopener">LinkedIn</a>.</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <span>MIT License &middot; Juan Gipponi</span>
-      <a href="https://github.com/beogip/code-first-agents" target="_blank" rel="noopener">GitHub &rarr;</a>
-    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const spectrum = document.querySelector(".spectrum");
+        const dot = document.getElementById("spectrumDot");
+        const steps = [...document.querySelectorAll(".spectrum-step")];
+        const ticks = steps.map((s) => s.querySelector(".spectrum-step__tick"));
+        const cards = steps.map((s) =>
+          s.querySelector(".spectrum-step__content"),
+        );
 
-  </div>
-</div>
+        function update() {
+          const spectrumRect = spectrum.getBoundingClientRect();
+          const viewCenter = window.innerHeight * 0.5;
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const spectrum = document.querySelector('.spectrum');
-  const dot = document.getElementById('spectrumDot');
-  const steps = [...document.querySelectorAll('.spectrum-step')];
-  const ticks = steps.map(s => s.querySelector('.spectrum-step__tick'));
-  const cards = steps.map(s => s.querySelector('.spectrum-step__content'));
+          // Get tick positions relative to spectrum container
+          const tickPositions = ticks.map((t) => {
+            const r = t.getBoundingClientRect();
+            return r.top + r.height / 2 - spectrumRect.top;
+          });
 
-  function update() {
-    const spectrumRect = spectrum.getBoundingClientRect();
-    const viewCenter = window.innerHeight * 0.5;
+          // Tick positions in screen space
+          const tickScreenPositions = ticks.map((t) => {
+            const r = t.getBoundingClientRect();
+            return r.top + r.height / 2;
+          });
 
-    // Get tick positions relative to spectrum container
-    const tickPositions = ticks.map(t => {
-      const r = t.getBoundingClientRect();
-      return r.top + r.height / 2 - spectrumRect.top;
-    });
+          // Progress: 0 when first tick is at viewport center, 1 when last tick is
+          const firstY = tickScreenPositions[0];
+          const lastY = tickScreenPositions[tickScreenPositions.length - 1];
+          const range = lastY - firstY;
 
-    // Tick positions in screen space
-    const tickScreenPositions = ticks.map(t => {
-      const r = t.getBoundingClientRect();
-      return r.top + r.height / 2;
-    });
+          let progress = 0;
+          if (range > 0) {
+            progress = (viewCenter - firstY) / range;
+            progress = Math.max(0, Math.min(1, progress));
+          }
 
-    // Progress: 0 when first tick is at viewport center, 1 when last tick is
-    const firstY = tickScreenPositions[0];
-    const lastY = tickScreenPositions[tickScreenPositions.length - 1];
-    const range = lastY - firstY;
+          // Dot Y: always anchored to tick positions, clamped to first tick minimum
+          const dotY =
+            tickPositions[0] +
+            (tickPositions[tickPositions.length - 1] - tickPositions[0]) *
+              progress;
+          const dotSize = 14 + progress * 6;
+          dot.style.top = dotY - dotSize / 2 + "px";
+          dot.style.left = 9 - dotSize / 2 + "px";
 
-    let progress = 0;
-    if (range > 0) {
-      progress = (viewCenter - firstY) / range;
-      progress = Math.max(0, Math.min(1, progress));
-    }
+          // Dot appearance: glow intensifies with progress
+          const glowIntensity = 0.15 + progress * 0.85;
+          const fillOpacity = progress * 0.8;
+          dot.style.width = dotSize + "px";
+          dot.style.height = dotSize + "px";
+          dot.style.borderColor = `rgba(180, 74, 255, ${0.25 + progress * 0.75})`;
+          dot.style.background = `rgba(180, 74, 255, ${fillOpacity})`;
+          dot.style.boxShadow = `0 0 ${6 + progress * 18}px rgba(180, 74, 255, ${glowIntensity})`;
 
-    // Dot Y: always anchored to tick positions, clamped to first tick minimum
-    const dotY = tickPositions[0] + (tickPositions[tickPositions.length - 1] - tickPositions[0]) * progress;
-    const dotSize = 14 + progress * 6;
-    dot.style.top = (dotY - dotSize / 2) + 'px';
-    dot.style.left = (9 - dotSize / 2) + 'px';
+          // Update each card based on its proximity to the current progress
+          steps.forEach((step, i) => {
+            // Each step activates at: i / (steps.length - 1) of progress
+            const stepThreshold = i / (steps.length - 1);
+            // How activated is this card? 0 = inactive, 1 = fully active
+            const activation = Math.max(
+              0,
+              Math.min(1, (progress - stepThreshold + 0.15) / 0.15),
+            );
 
-    // Dot appearance: glow intensifies with progress
-    const glowIntensity = 0.15 + progress * 0.85;
-    const fillOpacity = progress * 0.8;
-    dot.style.width = dotSize + 'px';
-    dot.style.height = dotSize + 'px';
-    dot.style.borderColor = `rgba(180, 74, 255, ${0.25 + progress * 0.75})`;
-    dot.style.background = `rgba(180, 74, 255, ${fillOpacity})`;
-    dot.style.boxShadow = `0 0 ${6 + progress * 18}px rgba(180, 74, 255, ${glowIntensity})`;
+            const card = cards[i];
+            card.style.opacity = 0.25 + activation * 0.75;
+            card.style.transform = `translateY(${(1 - activation) * 10}px)`;
+            card.style.borderColor = `rgba(180, 74, 255, ${0.04 + activation * 0.2})`;
+            card.style.background = `rgba(180, 74, 255, ${0.01 + activation * 0.04})`;
 
-    // Update each card based on its proximity to the current progress
-    steps.forEach((step, i) => {
-      // Each step activates at: i / (steps.length - 1) of progress
-      const stepThreshold = i / (steps.length - 1);
-      // How activated is this card? 0 = inactive, 1 = fully active
-      const activation = Math.max(0, Math.min(1, (progress - stepThreshold + 0.15) / 0.15));
+            // Tick mark activation
+            const tick = ticks[i];
+            tick.style.borderColor = `rgba(180, 74, 255, ${0.15 + activation * 0.4})`;
+            tick.style.background = `rgba(180, 74, 255, ${activation * 0.2})`;
+          });
+        }
 
-      const card = cards[i];
-      card.style.opacity = 0.25 + activation * 0.75;
-      card.style.transform = `translateY(${(1 - activation) * 10}px)`;
-      card.style.borderColor = `rgba(180, 74, 255, ${0.04 + activation * 0.2})`;
-      card.style.background = `rgba(180, 74, 255, ${0.01 + activation * 0.04})`;
+        // Run on scroll and resize
+        let ticking = false;
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              update();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
 
-      // Tick mark activation
-      const tick = ticks[i];
-      tick.style.borderColor = `rgba(180, 74, 255, ${0.15 + activation * 0.4})`;
-      tick.style.background = `rgba(180, 74, 255, ${activation * 0.2})`;
-    });
-  }
-
-  // Run on scroll and resize
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => { update(); ticking = false; });
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', update);
-  update();
-});
-</script>
-</body>
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      });
+    </script>
+    <!-- Cloudflare Web Analytics -->
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "18d81e876dd44ab782e8c7af6ce87bab"}'
+    ></script>
+    <!-- End Cloudflare Web Analytics -->
+  </body>
 </html>
