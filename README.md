@@ -2,7 +2,7 @@
 
 This branch (`gh-pages`) hosts the live site for **Code-First Agents**, a set of design patterns for building reliable AI agents by moving deterministic work from the LLM to code.
 
-**Live site:** https://beogip.github.io/code-first-agents/
+**Live site:** https://code-first-agents.com/
 
 ## Looking for the code?
 

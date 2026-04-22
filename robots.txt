@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://beogip.github.io/code-first-agents/sitemap.xml
+Sitemap: https://code-first-agents.com/sitemap.xml

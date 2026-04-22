@@ -6,9 +6,9 @@ The site documents two patterns (Deterministic Tools, Skill Orchestration) and a
 
 ## Pages
 
-- [Home](https://beogip.github.io/code-first-agents/index.md): The thesis, the architecture, the spectrum, and when to go code-first
-- [Deterministic Tools](https://beogip.github.io/code-first-agents/patterns/deterministic-tools.md): How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples.
-- [Skill Orchestration](https://beogip.github.io/code-first-agents/patterns/skill-orchestration.md): How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle.
+- [Home](https://code-first-agents.com/index.md): The thesis, the architecture, the spectrum, and when to go code-first
+- [Deterministic Tools](https://code-first-agents.com/patterns/deterministic-tools.md): How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples.
+- [Skill Orchestration](https://code-first-agents.com/patterns/skill-orchestration.md): How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle.
 
 ## Code
 
