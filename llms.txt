@@ -1,20 +1,24 @@
 # Code-First Agents
 
-> Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The LLM orchestrates. Code executes.
+> Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The core thesis: the LLM orchestrates, code executes. Tools handle classification, routing, and procedure assembly. The LLM follows whatever comes back.
 
-The site documents two patterns (Deterministic Tools, Skill Orchestration) and a spectrum of three levels (Data, Classification, Instructions) showing how much decision-making to absorb from the LLM into deterministic code.
+The site documents two patterns and a three-level spectrum showing how much decision-making to absorb from the LLM into deterministic code.
 
 ## Pages
 
-- [Home](https://code-first-agents.com/index.md): The thesis, the architecture, the spectrum, and when to go code-first
-- [Deterministic Tools](https://code-first-agents.com/patterns/deterministic-tools.md): How to build CLI tools that do deterministic work and output JSON. The tool contract, the output spectrum, and progressive examples.
-- [Skill Orchestration](https://code-first-agents.com/patterns/skill-orchestration.md): How to write SKILL.md files that consume tool output. The LLM as executor, chaining tools, guards, and the verbatim execution principle.
+- [Home](https://code-first-agents.com/index.md): The thesis behind code-first agents, the two-component architecture (tools + skills), the L1/L2/L3 spectrum of deterministic tools, and decision criteria for when to move logic from the LLM to code.
+- [Deterministic Tools](https://code-first-agents.com/patterns/deterministic-tools.md): How to build CLI tools with a standard contract (named params in, JSON out). Covers the tool contract, self-describing schemas with Zod/Pydantic, and progressive examples at all three spectrum levels.
+- [Skill Orchestration](https://code-first-agents.com/patterns/skill-orchestration.md): How to write SKILL.md files that consume tool output and turn LLMs into reliable executors. Covers consuming output at each level, chaining tools, loop guards, scope guards, and the verbatim execution principle.
+
+## Full Content
+
+- [Complete site content](https://code-first-agents.com/llms-full.txt): All pages concatenated in a single markdown document for bulk ingestion.
 
 ## Code
 
 The example tools and skill referenced on the site live in the [`main` branch](https://github.com/beogip/code-first-agents/tree/main/examples) of the repository.
 
-- [get-issue-signals.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/get-issue-signals.ts): Level 1 (Data) — fetches a GitHub issue and returns raw signals
-- [classify-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/classify-issue.ts): Level 2 (Classification) — scores signals and returns a complexity classification
-- [analyze-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/analyze-issue.ts): Level 3 (Instructions) — returns a literal procedure for the LLM to execute verbatim
+- [get-issue-signals.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/get-issue-signals.ts): Level 1 (Data) tool
+- [classify-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/classify-issue.ts): Level 2 (Classification) tool
+- [analyze-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/analyze-issue.ts): Level 3 (Instructions) tool
 - [plan-issue/SKILL.md](https://github.com/beogip/code-first-agents/blob/main/examples/skills/plan-issue/SKILL.md): Example skill that consumes analyze-issue.ts at Level 3

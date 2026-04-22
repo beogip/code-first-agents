@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 | Code-First Agents</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "JetBrains Mono", monospace;
+        background: #0a0a0f;
+        background-image: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(180, 74, 255, 0.04) 39px,
+            rgba(180, 74, 255, 0.04) 40px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            rgba(180, 74, 255, 0.04) 39px,
+            rgba(180, 74, 255, 0.04) 40px
+          );
+        color: #c8d6e5;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .container {
+        max-width: 480px;
+        padding: 40px 24px;
+      }
+      .code {
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-weight: 800;
+        font-size: 96px;
+        color: #b44aff;
+        text-shadow: 0 0 30px rgba(180, 74, 255, 0.5),
+          0 0 60px rgba(180, 74, 255, 0.2);
+        line-height: 1;
+        margin-bottom: 16px;
+      }
+      .message {
+        font-size: 14px;
+        color: #4a5568;
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+      .link {
+        display: inline-block;
+        font-size: 13px;
+        color: #c084fc;
+        text-decoration: none;
+        padding: 8px 20px;
+        border: 1px solid rgba(180, 74, 255, 0.3);
+        border-radius: 6px;
+        transition: border-color 0.3s, box-shadow 0.3s, color 0.3s;
+      }
+      .link:hover {
+        color: #b44aff;
+        border-color: #b44aff;
+        box-shadow: 0 0 16px rgba(180, 74, 255, 0.5),
+          0 0 4px rgba(180, 74, 255, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="code">404</div>
+      <p class="message">
+        This page doesn't exist. Maybe you followed a broken link, or the URL
+        changed.
+      </p>
+      <a href="/" class="link">Back to Code-First Agents</a>
+    </div>
+  </body>
+</html>

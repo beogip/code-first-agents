@@ -27,7 +27,7 @@
     />
     <meta
       property="og:title"
-      content="Code-First Agents — Design Patterns for Reliable AI Agents"
+      content="Code-First Agents | Design Patterns for Reliable AI Agents"
     />
     <meta
       property="og:description"
@@ -44,13 +44,15 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@beogip" />
+    <meta name="twitter:creator" content="@beogip" />
     <meta
       name="twitter:url"
       content="https://code-first-agents.com/"
     />
     <meta
       name="twitter:title"
-      content="Code-First Agents — Design Patterns for Reliable AI Agents"
+      content="Code-First Agents | Design Patterns for Reliable AI Agents"
     />
     <meta
       name="twitter:description"
@@ -71,6 +73,14 @@
     <link rel="stylesheet" href="assets/style.css" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link
       rel="alternate"
       type="text/markdown"
       href="index.md"
@@ -90,12 +100,96 @@
           "@type": "Person",
           "name": "Juan Gipponi",
           "url": "https://www.linkedin.com/in/juan-gipponi",
+          "jobTitle": "CTO",
+          "knowsAbout": [
+            "AI agents",
+            "LLM engineering",
+            "deterministic tools",
+            "Claude Code"
+          ],
           "sameAs": [
             "https://github.com/beogip",
             "https://www.linkedin.com/in/juan-gipponi"
           ]
         },
         "license": "https://opensource.org/licenses/MIT"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Code-First Agents: Design Patterns for Reliable AI Agents",
+        "description": "Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The LLM orchestrates. Code executes.",
+        "url": "https://code-first-agents.com/",
+        "datePublished": "2026-04-10",
+        "dateModified": "2026-04-22",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "Juan Gipponi",
+          "url": "https://www.linkedin.com/in/juan-gipponi",
+          "jobTitle": "CTO",
+          "knowsAbout": [
+            "AI agents",
+            "LLM engineering",
+            "deterministic tools",
+            "Claude Code"
+          ]
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Code-First Agents",
+          "url": "https://code-first-agents.com/"
+        },
+        "license": "https://opensource.org/licenses/MIT",
+        "keywords": "AI agents, LLM, design patterns, deterministic tools, skill orchestration"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Code-First Agents",
+            "item": "https://code-first-agents.com/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a code-first agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A code-first agent moves deterministic decision-making from the LLM into code. Tools handle classification, routing, and procedure assembly. The LLM calls the tool and follows whatever comes back. The more you push into code, the less you depend on probabilistic output for things that should be deterministic."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When should you move logic from the LLM to code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Move to code when the work is computational, has 3+ divergent paths, requires deterministic output, or when silent failures are costly. Keep in the LLM when it needs judgment or creativity, handles ambiguous input, requires conversational context, or involves multi-source synthesis."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the spectrum of deterministic tools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Deterministic tools exist on a spectrum of three levels. Level 1 (Data): the tool returns structured facts, the LLM interprets. Level 2 (Classification): the tool scores and classifies, the skill branches. Level 3 (Instructions): the tool builds the complete procedure, the LLM follows it verbatim with zero branching."
+            }
+          }
+        ]
       }
     </script>
   </head>
@@ -374,11 +468,6 @@
               This inverts the usual tool-use pattern. Instead of the LLM using
               tools to help with its plan, the tool builds the plan and the LLM
               carries it out.
-            </p>
-            <p>
-              I built kael.factory, a plugin generator for Claude Code, using
-              exactly these patterns. Every decision in the generation pipeline
-              runs on deterministic tools orchestrated by skills.
             </p>
           </div>
         </section>

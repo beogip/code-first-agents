@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Primary -->
-    <title>Skill Orchestration | Code-First Agents</title>
+    <title>Skill Orchestration for LLM Agents | Code-First Agents</title>
     <meta
       name="description"
-      content="Write SKILL.md files that turn LLMs into reliable executors. Consume tool output, chain tools, use guards, and make the LLM follow instructions verbatim."
+      content="Write code-first SKILL.md files that turn AI agents into reliable executors. Consume tool output, chain deterministic tools, use guards, and make the LLM follow instructions verbatim."
     />
     <meta
       name="keywords"
@@ -30,11 +30,11 @@
     />
     <meta
       property="og:title"
-      content="Skill Orchestration — Code-First Agents"
+      content="Skill Orchestration for LLM Agents | Code-First Agents"
     />
     <meta
       property="og:description"
-      content="Write SKILL.md files that turn LLMs into reliable executors. The consumer side of deterministic tools."
+      content="Write code-first SKILL.md files that turn AI agents into reliable executors. Consume tool output, chain deterministic tools, and use guards."
     />
     <meta
       property="og:image"
@@ -49,37 +49,51 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@beogip" />
+    <meta name="twitter:creator" content="@beogip" />
     <meta
       name="twitter:url"
       content="https://code-first-agents.com/patterns/skill-orchestration.html"
     />
     <meta
       name="twitter:title"
-      content="Skill Orchestration — Code-First Agents"
+      content="Skill Orchestration for LLM Agents | Code-First Agents"
     />
     <meta
       name="twitter:description"
-      content="Write SKILL.md files that turn LLMs into reliable executors. The consumer side of deterministic tools."
+      content="Write code-first SKILL.md files that turn AI agents into reliable executors. Consume tool output, chain deterministic tools, and use guards."
     />
     <meta
       name="twitter:image"
       content="https://code-first-agents.com/assets/og-image.png"
     />
 
+    <!-- Article dates -->
+    <meta property="article:published_time" content="2026-04-10" />
+    <meta property="article:modified_time" content="2026-04-22" />
+
     <!-- Assets -->
-    <link rel="stylesheet" href="../assets/style.css" />
-    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
-    <link
-      rel="alternate"
-      type="text/markdown"
-      href="skill-orchestration.md"
-      title="Markdown version for LLMs"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="skill-orchestration.md"
+      title="Markdown version for LLMs"
     />
 
     <!-- Schema.org -->
@@ -87,15 +101,24 @@
       {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "Skill Orchestration",
-        "name": "Skill Orchestration — Code-First Agents",
-        "description": "Write SKILL.md files that turn LLMs into reliable executors. Consume tool output, chain tools, use guards, and make the LLM follow instructions verbatim.",
+        "headline": "Skill Orchestration for LLM Agents",
+        "name": "Skill Orchestration for LLM Agents | Code-First Agents",
+        "description": "Write code-first SKILL.md files that turn AI agents into reliable executors. Consume tool output, chain deterministic tools, use guards, and make the LLM follow instructions verbatim.",
         "url": "https://code-first-agents.com/patterns/skill-orchestration.html",
+        "datePublished": "2026-04-10",
+        "dateModified": "2026-04-22",
         "inLanguage": "en",
         "author": {
           "@type": "Person",
           "name": "Juan Gipponi",
-          "url": "https://www.linkedin.com/in/juan-gipponi"
+          "url": "https://www.linkedin.com/in/juan-gipponi",
+          "jobTitle": "CTO",
+          "knowsAbout": [
+            "AI agents",
+            "LLM engineering",
+            "deterministic tools",
+            "Claude Code"
+          ]
         },
         "publisher": {
           "@type": "Organization",
@@ -108,7 +131,37 @@
           "url": "https://code-first-agents.com/"
         },
         "license": "https://opensource.org/licenses/MIT",
-        "keywords": "AI agents, SKILL.md, Agent Skills, LLM orchestration, prompt engineering"
+        "keywords": "AI agents, SKILL.md, Agent Skills, LLM orchestration, code-first, prompt engineering"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to write a code-first SKILL.md for AI agents",
+        "description": "Write a SKILL.md file that orchestrates deterministic tools, turning an LLM into a reliable executor with zero probabilistic branching.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Define the workflow phases",
+            "text": "Structure the skill as sequential phases: Analyze, Execute, Validate, Report. Each phase has a clear purpose."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Call deterministic tools via bash",
+            "text": "In each phase, run tools with named CLI parameters and read their JSON output. The tool does the decision-making."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Consume tool output at the right level",
+            "text": "At Level 1 (Data), the LLM interprets. At Level 2 (Classification), the skill branches. At Level 3 (Instructions), the LLM follows verbatim."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Add guards and gates",
+            "text": "Use loop guards to prevent infinite retries and scope guards to prevent file drift. Guards are deterministic tools that return halt/proceed signals."
+          }
+        ]
       }
     </script>
     <script type="application/ld+json">
@@ -498,6 +551,10 @@
               <a href="deterministic-tools.html">Deterministic Tools</a> covers
               the producer side: how to build the CLI tools that skills consume.
             </p>
+            <p>
+              For the full architecture and thesis behind these patterns, see
+              the <a href="../index.html">Code-First Agents homepage</a>.
+            </p>
           </div>
         </section>
 
@@ -520,20 +577,31 @@
           <p>
             The skills from these examples are in the repo. Fork it and make
             them yours:
-            <a href="https://github.com/beogip/code-first-agents"
+            <a
+              href="https://github.com/beogip/code-first-agents"
+              target="_blank"
+              rel="noopener"
               >code-first-agents on GitHub</a
             >
           </p>
           <p>
             Building with these patterns? I'd like to hear how it goes:
-            <a href="https://www.linkedin.com/in/juan-gipponi">LinkedIn</a>
+            <a
+              href="https://www.linkedin.com/in/juan-gipponi"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
           </p>
         </div>
 
         <!-- Footer -->
         <footer class="footer">
           <span>MIT License &middot; Juan Gipponi</span>
-          <a href="https://github.com/beogip/code-first-agents"
+          <a
+            href="https://github.com/beogip/code-first-agents"
+            target="_blank"
+            rel="noopener"
             >GitHub &rarr;</a
           >
         </footer>

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Primary -->
-    <title>Deterministic Tools | Code-First Agents</title>
+    <title>Deterministic Tools for AI Agents | Code-First Agents</title>
     <meta
       name="description"
-      content="Build CLI tools with a standard contract that do the deterministic work LLMs shouldn't. The tool contract, self-describing schemas, and the spectrum from Data to Classification to Instructions."
+      content="Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Instructions."
     />
     <meta
       name="keywords"
@@ -30,11 +30,11 @@
     />
     <meta
       property="og:title"
-      content="Deterministic Tools — Code-First Agents"
+      content="Deterministic Tools for AI Agents | Code-First Agents"
     />
     <meta
       property="og:description"
-      content="Build CLI tools with a standard contract that do the deterministic work LLMs shouldn't. Testable, fast, and predictable."
+      content="Build code-first CLI tools for AI agents. Deterministic processing, JSON output, and self-describing schemas. Testable, fast, and predictable."
     />
     <meta
       property="og:image"
@@ -49,37 +49,51 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@beogip" />
+    <meta name="twitter:creator" content="@beogip" />
     <meta
       name="twitter:url"
       content="https://code-first-agents.com/patterns/deterministic-tools.html"
     />
     <meta
       name="twitter:title"
-      content="Deterministic Tools — Code-First Agents"
+      content="Deterministic Tools for AI Agents | Code-First Agents"
     />
     <meta
       name="twitter:description"
-      content="Build CLI tools with a standard contract that do the deterministic work LLMs shouldn't."
+      content="Build code-first CLI tools for AI agents. Deterministic processing, JSON output, and self-describing schemas."
     />
     <meta
       name="twitter:image"
       content="https://code-first-agents.com/assets/og-image.png"
     />
 
+    <!-- Article dates -->
+    <meta property="article:published_time" content="2026-04-10" />
+    <meta property="article:modified_time" content="2026-04-22" />
+
     <!-- Assets -->
-    <link rel="stylesheet" href="../assets/style.css" />
-    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
-    <link
-      rel="alternate"
-      type="text/markdown"
-      href="deterministic-tools.md"
-      title="Markdown version for LLMs"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/favicon-32x32.png"
+    />
+    <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="deterministic-tools.md"
+      title="Markdown version for LLMs"
     />
 
     <!-- Schema.org -->
@@ -87,15 +101,24 @@
       {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "Deterministic Tools",
-        "name": "Deterministic Tools — Code-First Agents",
-        "description": "Build CLI tools with a standard contract that do the deterministic work LLMs shouldn't. The tool contract, self-describing schemas, and the spectrum from Data to Classification to Instructions.",
+        "headline": "Deterministic Tools for AI Agents",
+        "name": "Deterministic Tools for AI Agents | Code-First Agents",
+        "description": "Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Instructions.",
         "url": "https://code-first-agents.com/patterns/deterministic-tools.html",
+        "datePublished": "2026-04-10",
+        "dateModified": "2026-04-22",
         "inLanguage": "en",
         "author": {
           "@type": "Person",
           "name": "Juan Gipponi",
-          "url": "https://www.linkedin.com/in/juan-gipponi"
+          "url": "https://www.linkedin.com/in/juan-gipponi",
+          "jobTitle": "CTO",
+          "knowsAbout": [
+            "AI agents",
+            "LLM engineering",
+            "deterministic tools",
+            "Claude Code"
+          ]
         },
         "publisher": {
           "@type": "Organization",
@@ -108,7 +131,37 @@
           "url": "https://code-first-agents.com/"
         },
         "license": "https://opensource.org/licenses/MIT",
-        "keywords": "AI agents, CLI tools, deterministic, JSON schema, Zod, Pydantic"
+        "keywords": "AI agents, CLI tools, deterministic, JSON schema, Zod, Pydantic, code-first"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to build a deterministic tool for AI agents",
+        "description": "Build a CLI tool that takes named parameters, does deterministic processing, and outputs JSON to stdout for LLM consumption.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Define the input contract",
+            "text": "Use named CLI parameters (e.g., --owner, --repo, --issue) parsed with a standard argument parser."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Implement deterministic processing",
+            "text": "Write regular code (regex, scoring, file I/O, validation) with no LLM calls inside the tool."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Output JSON to stdout",
+            "text": "Print structured JSON output that the LLM can consume. Use a schema library (Zod or Pydantic) to validate the output shape."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Add self-describing schema",
+            "text": "Support a --schema flag that prints the tool's output contract as JSON Schema, generated from the same validator used at runtime."
+          }
+        ]
       }
     </script>
     <script type="application/ld+json">
@@ -797,6 +850,10 @@
               the consumer side: how skills call these tools, read their output,
               and orchestrate the workflow.
             </p>
+            <p>
+              For the full architecture and thesis behind these patterns, see
+              the <a href="../index.html">Code-First Agents homepage</a>.
+            </p>
           </div>
         </section>
 
@@ -804,7 +861,10 @@
         <div class="prose" style="margin-top: 3rem">
           <p>
             All the tools from these examples are in the repo, ready to run:
-            <a href="https://github.com/beogip/code-first-agents"
+            <a
+              href="https://github.com/beogip/code-first-agents"
+              target="_blank"
+              rel="noopener"
               >code-first-agents on GitHub</a
             >
           </p>
@@ -813,7 +873,10 @@
         <!-- Footer -->
         <footer class="footer">
           <span>MIT License &middot; Juan Gipponi</span>
-          <a href="https://github.com/beogip/code-first-agents"
+          <a
+            href="https://github.com/beogip/code-first-agents"
+            target="_blank"
+            rel="noopener"
             >GitHub &rarr;</a
           >
         </footer>
