@@ -46,6 +46,11 @@ bun examples/tools/analyze-issue.ts --owner acme --repo app --issue 42
 
 See [`examples/skills/plan-issue/SKILL.md`](examples/skills/plan-issue/SKILL.md) for a full skill that orchestrates `analyze-issue.ts` at Level 3.
 
+## Specs
+
+- [Code-First Agents Spec](specs/code-first-agents.md): formal specification covering the tool contract, skill orchestration, trade-offs, reference implementations, and evolution history.
+- [Anti-Patterns Registry](specs/anti-patterns/): catalog of heuristics for detecting when a skill or tool violates the code-first contract.
+
 ## Site
 
 The full documentation lives at **https://beogip.github.io/code-first-agents/**.
