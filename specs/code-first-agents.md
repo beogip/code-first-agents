@@ -213,6 +213,12 @@ Deterministic Tools and Skill Orchestration are two halves of the same architect
 
 The connection point is the tool contract: named params in, JSON to stdout, optionally a `--schema` flag. When tools are self-describing, skills can trust them without reading their internals. The spectrum runs on both sides because the shape of the tool's output decides the shape of the skill that consumes it. The more the tool absorbs, the thinner the skill becomes. At Level 3, the skill is a short shell and the LLM operates as an executor.
 
+## Anti-patterns
+
+Invariants describe the healthy shape. Anti-patterns describe the shapes we see when a skill or tool drifts away from them. The registry at [`anti-patterns/`](./anti-patterns/) holds one heuristic per anti-pattern, each with a detection signal, false-positive guards, examples, and the invariant it relates to.
+
+See [`anti-patterns/README.md`](./anti-patterns/README.md) for the full index grouped by status.
+
 ## Summary
 
 Three principles hold the pattern together.
