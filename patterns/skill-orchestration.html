@@ -285,31 +285,26 @@
               sequencing, not thinking.
             </p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">---</span>
-              <span class="comment">name: plan-issue</span>
-              <span class="comment"
-                >description: Analyze a GitHub issue and plan the
-                implementation</span
-              >
-              <span class="comment">tools: [tools/analyze-issue.ts]</span>
-              <span class="comment">---</span>
+<code><span class="comment">---</span>
+<span class="comment">name: plan-issue</span>
+<span class="comment">description: Analyze a GitHub issue and plan the implementation</span>
+<span class="comment">tools: [tools/analyze-issue.ts]</span>
+<span class="comment">---</span>
 
-              <span class="comment">## Phase 1: Analyze</span>
+<span class="comment">## Phase 1: Analyze</span>
 
-              1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo
-              "{repo}" --issue {number}` 2. Read the JSON output.
+1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo "{repo}" --issue {number}`
+2. Read the JSON output.
 
-              <span class="comment">## Phase 2: Execute</span>
+<span class="comment">## Phase 2: Execute</span>
 
-              Follow the `instructions` field from the tool output verbatim.
+Follow the `instructions` field from the tool output verbatim.
 
-              <span class="comment">## Phase 3: Report</span>
+<span class="comment">## Phase 3: Report</span>
 
-              Summarize the plan and ask the user to approve before
-              coding.</code
-            >
+Summarize the plan and ask the user to approve before coding.</code>
           </div>
           <div class="prose">
             <p>
@@ -336,16 +331,14 @@
           </div>
 
           <h3>Level 1: Data — The LLM interprets</h3>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Phase 1: Gather context</span>
+<code><span class="comment">## Phase 1: Gather context</span>
 
-              1. Run: `bun tools/get-issue-signals.ts --owner "{owner}" --repo
-              "{repo}" --issue {number}` 2. Review the signals in the JSON
-              output (checkboxes, file paths, code blocks, word count). 3. Based
-              on the signals, decide the best planning approach for this issue.
-              4. Explain your reasoning before proceeding.</code
-            >
+1. Run: `bun tools/get-issue-signals.ts --owner "{owner}" --repo "{repo}" --issue {number}`
+2. Review the signals in the JSON output (checkboxes, file paths, code blocks, word count).
+3. Based on the signals, decide the best planning approach for this issue.
+4. Explain your reasoning before proceeding.</code>
           </div>
           <div class="prose">
             <p>
@@ -357,34 +350,35 @@
           </div>
 
           <h3>Level 2: Classification — The skill branches</h3>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Phase 1: Classify</span>
+<code><span class="comment">## Phase 1: Classify</span>
 
-              1. Run: `bun tools/classify-issue.ts --owner "{owner}" --repo
-              "{repo}" --issue {number}` 2. Read the `complexity` field from the
-              JSON output.
+1. Run: `bun tools/classify-issue.ts --owner "{owner}" --repo "{repo}" --issue {number}`
+2. Read the `complexity` field from the JSON output.
 
-              <span class="comment">## Phase 2: Execute</span>
+<span class="comment">## Phase 2: Execute</span>
 
-              Follow the procedure for the returned complexity:
+Follow the procedure for the returned complexity:
 
-              <span class="comment">### If complexity is "lean"</span>
+<span class="comment">### If complexity is "lean"</span>
 
-              1. The issue is well-specified. List files to modify. 2. Write a
-              short implementation plan. 3. Start coding.
+1. The issue is well-specified. List files to modify.
+2. Write a short implementation plan.
+3. Start coding.
 
-              <span class="comment">### If complexity is "standard"</span>
+<span class="comment">### If complexity is "standard"</span>
 
-              1. Identify acceptance criteria. 2. Search the codebase for
-              related code. 3. Write a plan and ask the user to approve.
+1. Identify acceptance criteria.
+2. Search the codebase for related code.
+3. Write a plan and ask the user to approve.
 
-              <span class="comment">### If complexity is "full"</span>
+<span class="comment">### If complexity is "full"</span>
 
-              1. List missing information. 2. Search for related patterns in the
-              codebase. 3. Write a detailed plan with alternatives. 4. Ask the
-              user to approve before coding.</code
-            >
+1. List missing information.
+2. Search for related patterns in the codebase.
+3. Write a detailed plan with alternatives.
+4. Ask the user to approve before coding.</code>
           </div>
           <div class="prose">
             <p>
@@ -397,25 +391,26 @@
           </div>
 
           <h3>Level 3: Instructions — The LLM follows verbatim</h3>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Phase 1: Analyze</span>
+<code><span class="comment">## Phase 1: Analyze</span>
 
-              1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo
-              "{repo}" --issue {number}` 2. Read the `instructions` field from
-              the JSON output.
+1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo "{repo}" --issue {number}`
+2. Read the `instructions` field from the JSON output.
 
-              <span class="comment">## Phase 2: Execute</span>
+<span class="comment">## Phase 2: Execute</span>
 
-              Execute the `instructions` field verbatim. Do NOT modify the
-              procedure. Do NOT skip steps. Do NOT add steps. Do NOT override
-              the tool's decisions. INVARIANT: Follow the instructions
-              literally. No probabilistic branching.
+Execute the `instructions` field verbatim.
+Do NOT modify the procedure.
+Do NOT skip steps.
+Do NOT add steps.
+Do NOT override the tool's decisions.
 
-              <span class="comment">## Phase 3: Report</span>
+INVARIANT: Follow the instructions literally. No probabilistic branching.
 
-              Summarize what was done and link to any commits created.</code
-            >
+<span class="comment">## Phase 3: Report</span>
+
+Summarize what was done and link to any commits created.</code>
           </div>
           <div class="prose">
             <p>
@@ -442,28 +437,26 @@
               output feeds the next step.
             </p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Phase 1: Gather</span>
+<code><span class="comment">## Phase 1: Gather</span>
 
-              1. Run: `bun tools/git-state.ts` 2. Note the current branch,
-              uncommitted files, and recent commits.
+1. Run: `bun tools/git-state.ts`
+2. Note the current branch, uncommitted files, and recent commits.
 
-              <span class="comment">## Phase 2: Analyze</span>
+<span class="comment">## Phase 2: Analyze</span>
 
-              1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo
-              "{repo}" --issue {number}` 2. Read the `instructions` field.
+1. Run: `bun tools/analyze-issue.ts --owner "{owner}" --repo "{repo}" --issue {number}`
+2. Read the `instructions` field.
 
-              <span class="comment">## Phase 3: Execute</span>
+<span class="comment">## Phase 3: Execute</span>
 
-              Follow the `instructions` from Phase 2, using the git context from
-              Phase 1.
+Follow the `instructions` from Phase 2, using the git context from Phase 1.
 
-              <span class="comment">## Phase 4: Validate</span>
+<span class="comment">## Phase 4: Validate</span>
 
-              1. Run: `bun tools/run-tests.ts --suite unit` 2. If the `pass`
-              field is false, review failures and fix before proceeding.</code
-            >
+1. Run: `bun tools/run-tests.ts --suite unit`
+2. If the `pass` field is false, review failures and fix before proceeding.</code>
           </div>
           <div class="prose">
             <p>
@@ -481,15 +474,14 @@
             <p>Tools can also serve as guardrails within a workflow.</p>
             <p><strong>Loop guards</strong> prevent infinite retry cycles:</p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Fix Loop</span>
+<code><span class="comment">## Fix Loop</span>
 
-              1. Run tests. 2. If tests fail, attempt a fix. 3. Run: `bun
-              tools/fix-loop-guard.ts --attempt {n} --max 3` 4. If the `halt`
-              field is true, stop and report the failure. Do NOT attempt another
-              fix.</code
-            >
+1. Run tests.
+2. If tests fail, attempt a fix.
+3. Run: `bun tools/fix-loop-guard.ts --attempt {n} --max 3`
+4. If the `halt` field is true, stop and report the failure. Do NOT attempt another fix.</code>
           </div>
           <div class="prose">
             <p>
@@ -502,15 +494,12 @@
               unrelated files:
             </p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">## Phase 4: Verify scope</span>
+<code><span class="comment">## Phase 4: Verify scope</span>
 
-              1. Run: `bun tools/scope-guard.ts --allowed "{filePaths from
-              analyze-issue}" --changed "$(git diff --name-only)"` 2. If the
-              `out_of_scope` field is not empty, revert those files and explain
-              why they were excluded.</code
-            >
+1. Run: `bun tools/scope-guard.ts --allowed "{filePaths from analyze-issue}" --changed "$(git diff --name-only)"`
+2. If the `out_of_scope` field is not empty, revert those files and explain why they were excluded.</code>
           </div>
           <div class="prose">
             <p>

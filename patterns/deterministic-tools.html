@@ -281,86 +281,52 @@
             </p>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="fn">$</span> bun tools/get-issue-signals.ts
-              <span class="kw">--owner</span> <span class="str">"acme"</span>
-              <span class="kw">--repo</span> <span class="str">"app"</span>
-              <span class="kw">--issue</span> <span class="num">42</span>
+<code><span class="fn">$</span> bun tools/get-issue-signals.ts <span class="kw">--owner</span> <span class="str">"acme"</span> <span class="kw">--repo</span> <span class="str">"app"</span> <span class="kw">--issue</span> <span class="num">42</span>
 
-              {<span class="str">"checkboxes"</span>:<span class="num">3</span
-              >,<span class="str">"filePaths"</span>:<span class="num">2</span
-              >,<span class="str">"codeBlocks"</span>:<span class="num">1</span
-              >,<span class="str">"wordCount"</span>:<span class="num">450</span
-              >}</code
-            >
+{<span class="str">"checkboxes"</span>:<span class="num">3</span>,<span class="str">"filePaths"</span>:<span class="num">2</span>,<span class="str">"codeBlocks"</span>:<span class="num">1</span>,<span class="str">"wordCount"</span>:<span class="num">450</span>}</code>
           </div>
 
           <div class="prose">
             <p>A minimal tool looks like this:</p>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">#!/usr/bin/env bun</span>
-              <span class="comment">// tools/get-issue-signals.ts</span>
+<code><span class="comment">#!/usr/bin/env bun</span>
+<span class="comment">// tools/get-issue-signals.ts</span>
 
-              <span class="kw">import</span> {
-              <span class="fn">parseArgs</span> } <span class="kw">from</span>
-              <span class="str">"util"</span>;
+<span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-              <span class="kw">const</span> { <span class="prop">values</span> }
-              = <span class="fn">parseArgs</span>({
-              <span class="prop">args</span>: Bun.argv.slice(<span class="num"
-                >2</span
-              >), <span class="prop">options</span>: {
-              <span class="prop">owner</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> },
-              <span class="prop">repo</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> },
-              <span class="prop">issue</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> }, }, });
+<span class="kw">const</span> { <span class="prop">values</span> } = <span class="fn">parseArgs</span>({
+  <span class="prop">args</span>: Bun.argv.slice(<span class="num">2</span>),
+  <span class="prop">options</span>: {
+    <span class="prop">owner</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+    <span class="prop">repo</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+    <span class="prop">issue</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+  },
+});
 
-              <span class="comment">// Fetch issue body from GitHub</span>
-              <span class="kw">const</span> <span class="prop">res</span> =
-              <span class="kw">await</span> <span class="fn">fetch</span>(
-              <span class="str"
-                >`https://api.github.com/repos/${<span class="prop">values</span
-                >.<span class="prop">owner</span>}/${<span class="prop"
-                  >values</span
-                >.<span class="prop">repo</span>}/issues/${<span class="prop"
-                  >values</span
-                >.<span class="prop">issue</span>}`</span
-              >, { <span class="prop">headers</span>: {
-              <span class="prop">Authorization</span>:
-              <span class="str">`Bearer ${process.env.GITHUB_TOKEN}`</span> } },
-              ); <span class="kw">const</span> {
-              <span class="prop">body</span> } = <span class="kw">await</span>
-              <span class="prop">res</span>.<span class="fn">json</span>();
+<span class="comment">// Fetch issue body from GitHub</span>
+<span class="kw">const</span> <span class="prop">res</span> = <span class="kw">await</span> <span class="fn">fetch</span>(
+  <span class="str">`https://api.github.com/repos/${<span class="prop">values</span>.<span class="prop">owner</span>}/${<span class="prop">values</span>.<span class="prop">repo</span>}/issues/${<span class="prop">values</span>.<span class="prop">issue</span>}`</span>,
+  { <span class="prop">headers</span>: { <span class="prop">Authorization</span>: <span class="str">`Bearer ${process.env.GITHUB_TOKEN}`</span> } },
+);
+<span class="kw">const</span> { <span class="prop">body</span> } = <span class="kw">await</span> <span class="prop">res</span>.<span class="fn">json</span>();
 
-              <span class="comment"
-                >// Count structural signals with regex</span
-              >
-              <span class="kw">const</span>
-              <span class="prop">checkboxes</span> = (<span class="prop"
-                >body</span
-              >.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length;
-              <span class="kw">const</span>
-              <span class="prop">filePaths</span> = (<span class="prop"
-                >body</span
-              >.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ??
-              []).length; <span class="kw">const</span>
-              <span class="prop">codeBlocks</span> = (<span class="prop"
-                >body</span
-              >.match(<span class="str">/```/g</span>) ?? []).length /
-              <span class="num">2</span>; console.log( JSON.stringify({
-              <span class="prop">checkboxes</span>,
-              <span class="prop">filePaths</span>,
-              <span class="prop">codeBlocks</span>,
-              <span class="prop">wordCount</span>:
-              <span class="prop">body</span>.split(<span class="str">/\s+/</span
-              >).length, }), );</code
-            >
+<span class="comment">// Count structural signals with regex</span>
+<span class="kw">const</span> <span class="prop">checkboxes</span> = (<span class="prop">body</span>.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length;
+<span class="kw">const</span> <span class="prop">filePaths</span> = (<span class="prop">body</span>.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ?? []).length;
+<span class="kw">const</span> <span class="prop">codeBlocks</span> = (<span class="prop">body</span>.match(<span class="str">/```/g</span>) ?? []).length / <span class="num">2</span>;
+console.log(
+  JSON.stringify({
+    <span class="prop">checkboxes</span>,
+    <span class="prop">filePaths</span>,
+    <span class="prop">codeBlocks</span>,
+    <span class="prop">wordCount</span>: <span class="prop">body</span>.split(<span class="str">/\s+/</span>).length,
+  }),
+);</code>
           </div>
 
           <div class="prose">
@@ -396,19 +362,10 @@
               contract:
             </p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="fn">$</span> bun tools/analyze-issue.ts
-              <span class="kw">--schema</span> {<span class="str">"type"</span
-              >:<span class="str">"object"</span>,<span class="str"
-                >"properties"</span
-              >:{<span class="str">"complexity"</span>:{<span class="str"
-                >"type"</span
-              >:<span class="str">"string"</span>,<span class="str">"enum"</span
-              >:[<span class="str">"lean"</span>,<span class="str"
-                >"standard"</span
-              >,<span class="str">"full"</span>]}, ...}}</code
-            >
+<code><span class="fn">$</span> bun tools/analyze-issue.ts <span class="kw">--schema</span>
+{<span class="str">"type"</span>:<span class="str">"object"</span>,<span class="str">"properties"</span>:{<span class="str">"complexity"</span>:{<span class="str">"type"</span>:<span class="str">"string"</span>,<span class="str">"enum"</span>:[<span class="str">"lean"</span>,<span class="str">"standard"</span>,<span class="str">"full"</span>]}, ...}}</code>
           </div>
 
           <div class="prose">
@@ -418,44 +375,26 @@
               to validate its own output before printing.
             </p>
           </div>
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="kw">import</span> { <span class="prop">z</span> }
-              <span class="kw">from</span> <span class="str">"zod"</span>;
-              <span class="kw">import</span> {
-              <span class="prop">zodToJsonSchema</span> }
-              <span class="kw">from</span>
-              <span class="str">"zod-to-json-schema"</span>;
+<code><span class="kw">import</span> { <span class="prop">z</span> } <span class="kw">from</span> <span class="str">"zod"</span>;
+<span class="kw">import</span> { <span class="prop">zodToJsonSchema</span> } <span class="kw">from</span> <span class="str">"zod-to-json-schema"</span>;
 
-              <span class="kw">const</span> <span class="prop">Output</span> =
-              z.object({ <span class="prop">complexity</span>: z.enum([<span
-                class="str"
-                >"lean"</span
-              >, <span class="str">"standard"</span>,
-              <span class="str">"full"</span>]),
-              <span class="prop">score</span>: z.number().int().min(<span
-                class="num"
-                >0</span
-              >).max(<span class="num">10</span>),
-              <span class="prop">instructions</span>: z.string(), });
+<span class="kw">const</span> <span class="prop">Output</span> = z.object({
+  <span class="prop">complexity</span>: z.enum([<span class="str">"lean"</span>, <span class="str">"standard"</span>, <span class="str">"full"</span>]),
+  <span class="prop">score</span>: z.number().int().min(<span class="num">0</span>).max(<span class="num">10</span>),
+  <span class="prop">instructions</span>: z.string(),
+});
 
-              <span class="kw">const</span> <span class="prop">args</span> =
-              <span class="fn">parseArgs</span>(process.argv);
+<span class="kw">const</span> <span class="prop">args</span> = <span class="fn">parseArgs</span>(process.argv);
 
-              <span class="kw">if</span> (<span class="prop">args</span>.schema)
-              { console.log(JSON.stringify(<span class="fn"
-                >zodToJsonSchema</span
-              >(<span class="prop">Output</span>))); process.exit(<span
-                class="num"
-                >0</span
-              >); }
+<span class="kw">if</span> (<span class="prop">args</span>.schema) {
+  console.log(JSON.stringify(<span class="fn">zodToJsonSchema</span>(<span class="prop">Output</span>)));
+  process.exit(<span class="num">0</span>);
+}
 
-              <span class="kw">const</span> <span class="prop">result</span> =
-              <span class="kw">await</span>
-              <span class="fn">analyze</span>(<span class="prop">args</span>);
-              console.log(JSON.stringify(<span class="prop">Output</span
-              >.parse(<span class="prop">result</span>)));</code
-            >
+<span class="kw">const</span> <span class="prop">result</span> = <span class="kw">await</span> <span class="fn">analyze</span>(<span class="prop">args</span>);
+console.log(JSON.stringify(<span class="prop">Output</span>.parse(<span class="prop">result</span>)));</code>
           </div>
 
           <div class="prose">
@@ -500,82 +439,43 @@
             </p>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">#!/usr/bin/env bun</span>
-              <span class="comment">// tools/get-issue-signals.ts</span>
+<code><span class="comment">#!/usr/bin/env bun</span>
+<span class="comment">// tools/get-issue-signals.ts</span>
 
-              <span class="kw">import</span> {
-              <span class="fn">parseArgs</span> } <span class="kw">from</span>
-              <span class="str">"util"</span>;
+<span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-              <span class="kw">const</span> { <span class="prop">values</span> }
-              = <span class="fn">parseArgs</span>({
-              <span class="prop">args</span>: Bun.argv.slice(<span class="num"
-                >2</span
-              >), <span class="prop">options</span>: {
-              <span class="prop">owner</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> },
-              <span class="prop">repo</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> },
-              <span class="prop">issue</span>: { <span class="prop">type</span>:
-              <span class="str">"string"</span> }, }, });
+<span class="kw">const</span> { <span class="prop">values</span> } = <span class="fn">parseArgs</span>({
+  <span class="prop">args</span>: Bun.argv.slice(<span class="num">2</span>),
+  <span class="prop">options</span>: {
+    <span class="prop">owner</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+    <span class="prop">repo</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+    <span class="prop">issue</span>: { <span class="prop">type</span>: <span class="str">"string"</span> },
+  },
+});
 
-              <span class="kw">const</span> <span class="prop">res</span> =
-              <span class="kw">await</span> <span class="fn">fetch</span>(
-              <span class="str"
-                >`https://api.github.com/repos/${<span class="prop">values</span
-                >.<span class="prop">owner</span>}/${<span class="prop"
-                  >values</span
-                >.<span class="prop">repo</span>}/issues/${<span class="prop"
-                  >values</span
-                >.<span class="prop">issue</span>}`</span
-              >, { <span class="prop">headers</span>: {
-              <span class="prop">Authorization</span>:
-              <span class="str">`Bearer ${process.env.GITHUB_TOKEN}`</span> } },
-              ); <span class="kw">const</span> { <span class="prop">body</span>,
-              <span class="prop">title</span> } = <span class="kw">await</span>
-              <span class="prop">res</span>.<span class="fn">json</span>();
-              <span class="kw">const</span> <span class="prop">text</span> =
-              <span class="str"
-                >`${<span class="prop">title</span>} ${<span class="prop"
-                  >body</span
-                >}`</span
-              >; console.log( JSON.stringify({
-              <span class="prop">checkboxes</span>: (<span class="prop"
-                >body</span
-              >.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length,
-              <span class="prop">filePaths</span>: (<span class="prop"
-                >text</span
-              >.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ??
-              []).length, <span class="prop">codeBlocks</span>: (<span
-                class="prop"
-                >body</span
-              >.match(<span class="str">/```/g</span>) ?? []).length /
-              <span class="num">2</span>,
-              <span class="prop">acceptanceCriteria</span>:
-              <span class="str">/acceptance|criteria|must|should/i</span
-              >.test(<span class="prop">body</span>),
-              <span class="prop">wordCount</span>:
-              <span class="prop">body</span>.split(<span class="str">/\s+/</span
-              >).length, }), );</code
-            >
+<span class="kw">const</span> <span class="prop">res</span> = <span class="kw">await</span> <span class="fn">fetch</span>(
+  <span class="str">`https://api.github.com/repos/${<span class="prop">values</span>.<span class="prop">owner</span>}/${<span class="prop">values</span>.<span class="prop">repo</span>}/issues/${<span class="prop">values</span>.<span class="prop">issue</span>}`</span>,
+  { <span class="prop">headers</span>: { <span class="prop">Authorization</span>: <span class="str">`Bearer ${process.env.GITHUB_TOKEN}`</span> } },
+);
+<span class="kw">const</span> { <span class="prop">body</span>, <span class="prop">title</span> } = <span class="kw">await</span> <span class="prop">res</span>.<span class="fn">json</span>();
+<span class="kw">const</span> <span class="prop">text</span> = <span class="str">`${<span class="prop">title</span>} ${<span class="prop">body</span>}`</span>;
+console.log(
+  JSON.stringify({
+    <span class="prop">checkboxes</span>: (<span class="prop">body</span>.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length,
+    <span class="prop">filePaths</span>: (<span class="prop">text</span>.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ?? []).length,
+    <span class="prop">codeBlocks</span>: (<span class="prop">body</span>.match(<span class="str">/```/g</span>) ?? []).length / <span class="num">2</span>,
+    <span class="prop">acceptanceCriteria</span>: <span class="str">/acceptance|criteria|must|should/i</span>.test(<span class="prop">body</span>),
+    <span class="prop">wordCount</span>: <span class="prop">body</span>.split(<span class="str">/\s+/</span>).length,
+  }),
+);</code>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="fn">$</span> bun tools/get-issue-signals.ts
-              <span class="kw">--owner</span> <span class="str">acme</span>
-              <span class="kw">--repo</span> <span class="str">app</span>
-              <span class="kw">--issue</span> <span class="num">42</span> {
-              <span class="str">"checkboxes"</span>: <span class="num">5</span>,
-              <span class="str">"filePaths"</span>: <span class="num">3</span>,
-              <span class="str">"codeBlocks"</span>: <span class="num">1</span>,
-              <span class="str">"acceptanceCriteria"</span>:
-              <span class="kw">true</span>,
-              <span class="str">"wordCount"</span>:
-              <span class="num">450</span> }</code
-            >
+<code><span class="fn">$</span> bun tools/get-issue-signals.ts <span class="kw">--owner</span> <span class="str">acme</span> <span class="kw">--repo</span> <span class="str">app</span> <span class="kw">--issue</span> <span class="num">42</span>
+{ <span class="str">"checkboxes"</span>: <span class="num">5</span>, <span class="str">"filePaths"</span>: <span class="num">3</span>, <span class="str">"codeBlocks"</span>: <span class="num">1</span>, <span class="str">"acceptanceCriteria"</span>: <span class="kw">true</span>, <span class="str">"wordCount"</span>: <span class="num">450</span> }</code>
           </div>
 
           <div class="prose">
@@ -595,90 +495,39 @@
             </p>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">#!/usr/bin/env bun</span>
-              <span class="comment">// tools/classify-issue.ts</span>
+<code><span class="comment">#!/usr/bin/env bun</span>
+<span class="comment">// tools/classify-issue.ts</span>
 
-              <span class="kw">import</span> {
-              <span class="fn">parseArgs</span> } <span class="kw">from</span>
-              <span class="str">"util"</span>;
+<span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-              <span class="comment"
-                >// ... same fetch + signal detection as Level 1 ...</span
-              >
+<span class="comment">// ... same fetch + signal detection as Level 1 ...</span>
 
-              <span class="kw">const</span> <span class="prop">signals</span> =
-              { <span class="prop">checkboxes</span>: (<span class="prop"
-                >body</span
-              >.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length,
-              <span class="prop">filePaths</span>: (<span class="prop"
-                >text</span
-              >.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ??
-              []).length, <span class="prop">codeBlocks</span>: (<span
-                class="prop"
-                >body</span
-              >.match(<span class="str">/```/g</span>) ?? []).length /
-              <span class="num">2</span>,
-              <span class="prop">acceptanceCriteria</span>:
-              <span class="str">/acceptance|criteria|must|should/i</span
-              >.test(<span class="prop">body</span>),
-              <span class="prop">wordCount</span>:
-              <span class="prop">body</span>.split(<span class="str">/\s+/</span
-              >).length, };
+<span class="kw">const</span> <span class="prop">signals</span> = {
+  <span class="prop">checkboxes</span>: (<span class="prop">body</span>.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length,
+  <span class="prop">filePaths</span>: (<span class="prop">text</span>.match(<span class="str">/[\w./]+\.\w{1,4}/g</span>) ?? []).length,
+  <span class="prop">codeBlocks</span>: (<span class="prop">body</span>.match(<span class="str">/```/g</span>) ?? []).length / <span class="num">2</span>,
+  <span class="prop">acceptanceCriteria</span>: <span class="str">/acceptance|criteria|must|should/i</span>.test(<span class="prop">body</span>),
+  <span class="prop">wordCount</span>: <span class="prop">body</span>.split(<span class="str">/\s+/</span>).length,
+};
 
-              <span class="comment">// Deterministic scoring</span>
-              <span class="kw">let</span> <span class="prop">score</span> =
-              <span class="num">0</span>; <span class="kw">if</span> (<span
-                class="prop"
-                >signals</span
-              >.<span class="prop">checkboxes</span> &gt;=
-              <span class="num">2</span>) <span class="prop">score</span> +=
-              <span class="num">3</span>; <span class="kw">if</span> (<span
-                class="prop"
-                >signals</span
-              >.<span class="prop">acceptanceCriteria</span>)
-              <span class="prop">score</span> += <span class="num">2</span>;
-              <span class="kw">if</span> (<span class="prop">signals</span
-              >.<span class="prop">filePaths</span> &gt;=
-              <span class="num">1</span>) <span class="prop">score</span> +=
-              <span class="num">2</span>; <span class="kw">if</span> (<span
-                class="prop"
-                >signals</span
-              >.<span class="prop">codeBlocks</span> &gt;=
-              <span class="num">1</span>) <span class="prop">score</span> +=
-              <span class="num">1</span>; <span class="kw">if</span> (<span
-                class="prop"
-                >signals</span
-              >.<span class="prop">wordCount</span> &gt;=
-              <span class="num">200</span>) <span class="prop">score</span> +=
-              <span class="num">1</span>;
+<span class="comment">// Deterministic scoring</span>
+<span class="kw">let</span> <span class="prop">score</span> = <span class="num">0</span>;
+<span class="kw">if</span> (<span class="prop">signals</span>.<span class="prop">checkboxes</span> &gt;= <span class="num">2</span>) <span class="prop">score</span> += <span class="num">3</span>;
+<span class="kw">if</span> (<span class="prop">signals</span>.<span class="prop">acceptanceCriteria</span>) <span class="prop">score</span> += <span class="num">2</span>;
+<span class="kw">if</span> (<span class="prop">signals</span>.<span class="prop">filePaths</span> &gt;= <span class="num">1</span>) <span class="prop">score</span> += <span class="num">2</span>;
+<span class="kw">if</span> (<span class="prop">signals</span>.<span class="prop">codeBlocks</span> &gt;= <span class="num">1</span>) <span class="prop">score</span> += <span class="num">1</span>;
+<span class="kw">if</span> (<span class="prop">signals</span>.<span class="prop">wordCount</span> &gt;= <span class="num">200</span>) <span class="prop">score</span> += <span class="num">1</span>;
 
-              <span class="kw">const</span>
-              <span class="prop">complexity</span> =
-              <span class="prop">score</span> &gt;= <span class="num">7</span> ?
-              <span class="str">"lean"</span> :
-              <span class="prop">score</span> &gt;= <span class="num">4</span> ?
-              <span class="str">"standard"</span> :
-              <span class="str">"full"</span>; console.log(JSON.stringify({
-              <span class="prop">complexity</span>,
-              <span class="prop">score</span>,
-              <span class="prop">signals</span> }));</code
-            >
+<span class="kw">const</span> <span class="prop">complexity</span> = <span class="prop">score</span> &gt;= <span class="num">7</span> ? <span class="str">"lean"</span> : <span class="prop">score</span> &gt;= <span class="num">4</span> ? <span class="str">"standard"</span> : <span class="str">"full"</span>;
+console.log(JSON.stringify({ <span class="prop">complexity</span>, <span class="prop">score</span>, <span class="prop">signals</span> }));</code>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="fn">$</span> bun tools/classify-issue.ts
-              <span class="kw">--owner</span> <span class="str">acme</span>
-              <span class="kw">--repo</span> <span class="str">app</span>
-              <span class="kw">--issue</span> <span class="num">42</span> {
-              <span class="str">"complexity"</span>:
-              <span class="str">"lean"</span>, <span class="str">"score"</span>:
-              <span class="num">8</span>, <span class="str">"signals"</span>: {
-              <span class="str">"checkboxes"</span>: <span class="num">5</span>,
-              ... } }</code
-            >
+<code><span class="fn">$</span> bun tools/classify-issue.ts <span class="kw">--owner</span> <span class="str">acme</span> <span class="kw">--repo</span> <span class="str">app</span> <span class="kw">--issue</span> <span class="num">42</span>
+{ <span class="str">"complexity"</span>: <span class="str">"lean"</span>, <span class="str">"score"</span>: <span class="num">8</span>, <span class="str">"signals"</span>: { <span class="str">"checkboxes"</span>: <span class="num">5</span>, ... } }</code>
           </div>
 
           <div class="prose">
@@ -699,84 +548,54 @@
             </p>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="comment">#!/usr/bin/env bun</span>
-              <span class="comment">// tools/analyze-issue.ts</span>
+<code><span class="comment">#!/usr/bin/env bun</span>
+<span class="comment">// tools/analyze-issue.ts</span>
 
-              <span class="kw">import</span> {
-              <span class="fn">parseArgs</span> } <span class="kw">from</span>
-              <span class="str">"util"</span>;
+<span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-              <span class="comment"
-                >// ... same fetch + signal detection + scoring as Level 2
-                ...</span
-              >
+<span class="comment">// ... same fetch + signal detection + scoring as Level 2 ...</span>
 
-              <span class="kw">const</span>
-              <span class="prop">complexity</span> =
-              <span class="prop">score</span> &gt;= <span class="num">7</span> ?
-              <span class="str">"lean"</span> :
-              <span class="prop">score</span> &gt;= <span class="num">4</span> ?
-              <span class="str">"standard"</span> :
-              <span class="str">"full"</span>;
+<span class="kw">const</span> <span class="prop">complexity</span> = <span class="prop">score</span> &gt;= <span class="num">7</span> ? <span class="str">"lean"</span> : <span class="prop">score</span> &gt;= <span class="num">4</span> ? <span class="str">"standard"</span> : <span class="str">"full"</span>;
 
-              <span class="kw">const</span>
-              <span class="prop">procedures</span>:
-              <span class="type">Record</span>&lt;<span class="type"
-                >string</span
-              >, <span class="type">string</span>&gt; = {
-              <span class="prop">lean</span>:
-              <span class="str"
-                >`## Lean Plan 1. The issue is well-specified. Skip deep
-                analysis. 2. List the files to modify based on the file paths in
-                the issue. 3. Write a 3-5 bullet implementation plan. 4. Start
-                coding immediately.`</span
-              >,
+<span class="kw">const</span> <span class="prop">procedures</span>: <span class="type">Record</span>&lt;<span class="type">string</span>, <span class="type">string</span>&gt; = {
+  <span class="prop">lean</span>: <span class="str">`## Lean Plan
+1. The issue is well-specified. Skip deep analysis.
+2. List the files to modify based on the file paths in the issue.
+3. Write a 3-5 bullet implementation plan.
+4. Start coding immediately.`</span>,
 
-              <span class="prop">standard</span>:
-              <span class="str"
-                >`## Standard Plan 1. Read the full issue and identify
-                acceptance criteria. 2. Search the codebase for related code. 3.
-                Write a plan covering: files to modify, approach, edge cases. 4.
-                Ask the user to approve the plan before coding.`</span
-              >,
+  <span class="prop">standard</span>: <span class="str">`## Standard Plan
+1. Read the full issue and identify acceptance criteria.
+2. Search the codebase for related code.
+3. Write a plan covering: files to modify, approach, edge cases.
+4. Ask the user to approve the plan before coding.`</span>,
 
-              <span class="prop">full</span>:
-              <span class="str"
-                >`## Full Plan 1. The issue is underspecified. Gather more
-                context before planning. 2. List what information is missing
-                (acceptance criteria, affected files, scope). 3. Search the
-                codebase for related patterns. 4. Write a detailed plan with
-                alternatives and trade-offs. 5. Ask the user to approve the plan
-                before coding.`</span
-              >, }; console.log( JSON.stringify({
-              <span class="prop">complexity</span>,
-              <span class="prop">score</span>,
-              <span class="prop">instructions</span>:
-              <span class="prop">procedures</span>[<span class="prop"
-                >complexity</span
-              >], }), );</code
-            >
+  <span class="prop">full</span>: <span class="str">`## Full Plan
+1. The issue is underspecified. Gather more context before planning.
+2. List what information is missing (acceptance criteria, affected files, scope).
+3. Search the codebase for related patterns.
+4. Write a detailed plan with alternatives and trade-offs.
+5. Ask the user to approve the plan before coding.`</span>,
+};
+console.log(
+  JSON.stringify({
+    <span class="prop">complexity</span>,
+    <span class="prop">score</span>,
+    <span class="prop">instructions</span>: <span class="prop">procedures</span>[<span class="prop">complexity</span>],
+  }),
+);</code>
           </div>
 
+          <!-- prettier-ignore -->
           <div class="code-block">
-            <code
-              ><span class="fn">$</span> bun tools/analyze-issue.ts
-              <span class="kw">--owner</span> <span class="str">acme</span>
-              <span class="kw">--repo</span> <span class="str">app</span>
-              <span class="kw">--issue</span> <span class="num">42</span>
-              {
-              <span class="str">"complexity"</span>:
-              <span class="str">"lean"</span>, <span class="str">"score"</span>:
-              <span class="num">8</span>,
-              <span class="str">"instructions"</span>:
-              <span class="str"
-                >"## Lean Plan\n1. The issue is well-specified. Skip deep
-                analysis..."</span
-              >
-              }</code
-            >
+<code><span class="fn">$</span> bun tools/analyze-issue.ts <span class="kw">--owner</span> <span class="str">acme</span> <span class="kw">--repo</span> <span class="str">app</span> <span class="kw">--issue</span> <span class="num">42</span>
+{
+  <span class="str">"complexity"</span>: <span class="str">"lean"</span>,
+  <span class="str">"score"</span>: <span class="num">8</span>,
+  <span class="str">"instructions"</span>: <span class="str">"## Lean Plan\n1. The issue is well-specified. Skip deep analysis..."</span>
+}</code>
           </div>
 
           <div class="prose">
