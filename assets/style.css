@@ -123,8 +123,14 @@ body {
   text-shadow: 0 0 10px rgba(180, 74, 255, 0.6), 0 0 20px rgba(180, 74, 255, 0.3);
 }
 
-.sidebar__github {
+.sidebar__actions {
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__github {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -139,6 +145,10 @@ body {
 .sidebar__github:hover {
   color: var(--cyan);
   text-shadow: 0 0 8px rgba(180, 74, 255, 0.5);
+}
+
+.sidebar__burger {
+  display: none;
 }
 
 /* ══════════════════════════════════════
@@ -1183,9 +1193,10 @@ em {
     width: 100%;
     height: auto;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     padding: 16px 20px;
-    gap: 24px;
+    gap: 0;
     border-right: none;
     border-bottom: 1px solid rgba(180, 74, 255, 0.15);
   }
@@ -1206,17 +1217,75 @@ em {
     white-space: nowrap;
   }
 
-  .sidebar__nav {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .sidebar__nav li { margin-bottom: 0; }
-
-  .sidebar__github {
+  .sidebar__actions {
     margin-top: 0;
     margin-left: auto;
+  }
+
+  .sidebar__github-label {
+    display: none;
+  }
+
+  .sidebar__nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 16px;
+  }
+
+  .sidebar__nav.open {
+    display: flex;
+  }
+
+  .sidebar__nav li {
+    margin-bottom: 0;
+    padding: 10px 0;
+    border-top: 1px solid rgba(180, 74, 255, 0.08);
+  }
+
+  .sidebar__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+    background: none;
+    border: 1px solid rgba(180, 74, 255, 0.25);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .sidebar__burger:hover {
+    border-color: var(--cyan);
+  }
+
+  .sidebar__burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--muted);
+    border-radius: 1px;
+    transition: transform 0.3s, opacity 0.3s, background 0.3s;
+  }
+
+  .sidebar__burger:hover span {
+    background: var(--cyan);
+  }
+
+  .sidebar__burger.open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .sidebar__burger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .sidebar__burger.open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   .main { margin-left: 0; }
