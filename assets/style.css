@@ -1217,7 +1217,12 @@ em {
     white-space: nowrap;
   }
 
+  .sidebar__title {
+    order: 1;
+  }
+
   .sidebar__actions {
+    order: 2;
     margin-top: 0;
     margin-left: auto;
   }
@@ -1227,6 +1232,7 @@ em {
   }
 
   .sidebar__nav {
+    order: 3;
     display: none;
     flex-basis: 100%;
     flex-direction: column;
