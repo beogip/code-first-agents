@@ -128,9 +128,29 @@
         "headline": "Code-First Agents: Design Patterns for Reliable AI Agents",
         "description": "Design patterns for building reliable AI agents by moving deterministic work from the LLM to code. The LLM orchestrates. Code executes.",
         "url": "https://code-first-agents.com/",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://code-first-agents.com/"
+        },
         "datePublished": "2026-04-10",
-        "dateModified": "2026-04-22",
+        "dateModified": "2026-05-21",
         "inLanguage": "en",
+        "about": [
+          {
+            "@type": "DefinedTerm",
+            "name": "AI Agents",
+            "description": "Autonomous software systems that use LLMs to orchestrate tasks"
+          },
+          {
+            "@type": "DefinedTerm",
+            "name": "Deterministic Tools",
+            "description": "Code-first tools that move decision-making from the LLM into testable code"
+          }
+        ],
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [".hero__subtitle", "#problem .prose p:first-of-type"]
+        },
         "author": {
           "@type": "Person",
           "name": "Juan Gipponi",
@@ -146,7 +166,11 @@
         "publisher": {
           "@type": "Organization",
           "name": "Code-First Agents",
-          "url": "https://code-first-agents.com/"
+          "url": "https://code-first-agents.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://code-first-agents.com/assets/favicon.svg"
+          }
         },
         "license": "https://opensource.org/licenses/MIT",
         "keywords": "AI agents, LLM, design patterns, deterministic tools, skill orchestration"
@@ -155,15 +179,18 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Code-First Agents",
-            "item": "https://code-first-agents.com/"
-          }
-        ]
+        "@type": "SoftwareSourceCode",
+        "name": "Code-First Agents",
+        "description": "Design patterns and specs for building reliable AI agents by moving deterministic work from the LLM to code.",
+        "codeRepository": "https://github.com/beogip/code-first-agents",
+        "url": "https://code-first-agents.com/",
+        "programmingLanguage": ["TypeScript", "Python", "Markdown"],
+        "license": "https://opensource.org/licenses/MIT",
+        "author": {
+          "@type": "Person",
+          "name": "Juan Gipponi",
+          "url": "https://www.linkedin.com/in/juan-gipponi"
+        }
       }
     </script>
     <script type="application/ld+json">
