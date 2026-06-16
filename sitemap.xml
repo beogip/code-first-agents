@@ -25,6 +25,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://code-first-agents.com/privacy.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://code-first-agents.com/patterns/deterministic-tools.md</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>

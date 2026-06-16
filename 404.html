@@ -13,13 +13,24 @@
       sizes="32x32"
       href="/assets/favicon-32x32.png"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <style>
+      /* Self-hosted fonts (no third-party requests, GDPR-friendly). OFL 1.1. */
+      @font-face {
+        font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 700;
+        font-display: swap; src: url("/assets/fonts/bricolage-grotesque-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 800;
+        font-display: swap; src: url("/assets/fonts/bricolage-grotesque-800.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono"; font-style: normal; font-weight: 400;
+        font-display: swap; src: url("/assets/fonts/jetbrains-mono-400.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono"; font-style: normal; font-weight: 500;
+        font-display: swap; src: url("/assets/fonts/jetbrains-mono-500.woff2") format("woff2");
+      }
       *,
       *::before,
       *::after {
