@@ -2,6 +2,55 @@
    Code-First Agents — TRON Design System
    Lora + Bricolage Grotesque + JetBrains Mono
    ══════════════════════════════════════ */
+
+/* ── Self-hosted fonts (no third-party requests, GDPR-friendly) ──
+   All three families are licensed under the SIL Open Font License (OFL 1.1),
+   which permits redistribution. Files live in assets/fonts/. */
+@font-face {
+  font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 400;
+  font-display: swap; src: url('fonts/bricolage-grotesque-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 600;
+  font-display: swap; src: url('fonts/bricolage-grotesque-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 700;
+  font-display: swap; src: url('fonts/bricolage-grotesque-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 800;
+  font-display: swap; src: url('fonts/bricolage-grotesque-800.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400;
+  font-display: swap; src: url('fonts/jetbrains-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500;
+  font-display: swap; src: url('fonts/jetbrains-mono-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Lora'; font-style: normal; font-weight: 400;
+  font-display: swap; src: url('fonts/lora-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Lora'; font-style: normal; font-weight: 500;
+  font-display: swap; src: url('fonts/lora-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Lora'; font-style: normal; font-weight: 600;
+  font-display: swap; src: url('fonts/lora-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Lora'; font-style: normal; font-weight: 700;
+  font-display: swap; src: url('fonts/lora-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Lora'; font-style: italic; font-weight: 400;
+  font-display: swap; src: url('fonts/lora-italic-400.woff2') format('woff2');
+}
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
