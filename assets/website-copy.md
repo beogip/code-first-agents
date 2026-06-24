@@ -88,6 +88,14 @@ At Level 3, the tool becomes a prompt factory: it generates the exact procedure 
 
 This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
 
+There's a framework for building exactly this. Add it in one line.
+
+```bash
+$ bun add @code-first-agents/tool
+```
+
+[Get it on npm](https://www.npmjs.com/package/@code-first-agents/tool)
+
 I built kael.factory, a plugin generator for Claude Code, using exactly these patterns. Every decision in the generation pipeline runs on deterministic tools orchestrated by skills.
 
 ---
@@ -147,6 +155,18 @@ If you're building agents and want to talk about this stuff, I'm on [LinkedIn](h
 **Deterministic Tools**
 
 CLI tools that do the work LLMs shouldn't. Write a test, run it, get the same result tomorrow.
+
+---
+
+### Install
+
+The framework for building deterministic tools, packaged.
+
+```bash
+$ bun add @code-first-agents/tool
+```
+
+[Get it on npm](https://www.npmjs.com/package/@code-first-agents/tool)
 
 ---
 

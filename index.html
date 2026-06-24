@@ -122,7 +122,7 @@
           "@id": "https://code-first-agents.com/"
         },
         "datePublished": "2026-04-10",
-        "dateModified": "2026-05-21",
+        "dateModified": "2026-06-24",
         "inLanguage": "en",
         "about": [
           {
@@ -175,6 +175,28 @@
         "url": "https://code-first-agents.com/",
         "programmingLanguage": ["TypeScript", "Python", "Markdown"],
         "license": "https://opensource.org/licenses/MIT",
+        "author": {
+          "@type": "Person",
+          "name": "Juan Gipponi",
+          "url": "https://www.linkedin.com/in/juan-gipponi"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "@code-first-agents/tool",
+        "description": "A code-first-agents framework for building deterministic CLI tools that LLM agents can discover, validate, and invoke with zero guesswork.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Cross-platform",
+        "installUrl": "https://www.npmjs.com/package/@code-first-agents/tool",
+        "softwareHelp": "https://code-first-agents.com/patterns/deterministic-tools.html",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
         "author": {
           "@type": "Person",
           "name": "Juan Gipponi",
@@ -519,7 +541,20 @@
               tools to help with its plan, the tool builds the plan and the LLM
               carries it out.
             </p>
+            <p>There's a framework for building exactly this. Add it in one line.</p>
           </div>
+          <!-- prettier-ignore -->
+          <div class="code-block">
+<code><span class="fn">$</span> bun add <span class="str">@code-first-agents/tool</span></code>
+          </div>
+          <a
+            href="https://www.npmjs.com/package/@code-first-agents/tool"
+            target="_blank"
+            rel="noopener"
+            class="hero__cta"
+          >
+            Get it on npm
+          </a>
         </section>
 
         <!-- Pattern Catalogue -->
