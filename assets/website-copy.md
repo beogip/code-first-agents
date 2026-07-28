@@ -60,7 +60,7 @@ Tools do the heavy lifting. Skills wire them together into a workflow the LLM ca
 
 Not all tools are equal. They exist on a spectrum based on how much decision-making they absorb from the LLM.
 
-**Level 1: Data**
+**Data**
 The tool returns structured facts. The LLM interprets them and decides what to do.
 
 ```
@@ -68,7 +68,7 @@ Tool returns: { "checkboxes": 3, "file_paths": 2, "code_blocks": 1, "word_count"
 LLM does: reads the signals, makes a judgment call on issue complexity
 ```
 
-**Level 2: Classification**
+**Classification**
 The tool scores signals and classifies. It returns a complexity level. The skill branches on it.
 
 ```
@@ -76,7 +76,7 @@ Tool returns: { "complexity": "standard", "score": 6 }
 LLM does: reads the complexity, follows the matching branch in the skill
 ```
 
-**Level 3: Instructions**
+**Procedure**
 The tool scores, classifies, and builds the complete procedure. The LLM follows it verbatim.
 
 ```
@@ -84,7 +84,7 @@ Tool returns: { "complexity": "standard", "instructions": "## Step 1: Read the i
 LLM does: executes the instructions exactly as written. Zero branching.
 ```
 
-At Level 3, the tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
+A procedure tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
 
 This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
 
@@ -262,7 +262,7 @@ You pay a dependency (Zod or Pydantic). You get a contract the LLM can discover,
 
 The same problem (deciding how to plan a GitHub issue) can be solved at three levels of sophistication. Each level moves more decision-making from the LLM to code.
 
-#### Level 1: Data
+#### Data
 
 The tool returns raw signals from the issue body. The LLM interprets them.
 
@@ -273,7 +273,7 @@ $ bun tools/get-issue-signals.ts --owner acme --repo app --issue 42
 
 The LLM gets raw signals and decides what to do. It has full discretion. Good for cases where the data needs interpretation in context.
 
-#### Level 2: Classification
+#### Classification
 
 The tool counts signals, scores them deterministically, and classifies issue complexity. It returns a `complexity` field that the skill can branch on.
 
@@ -284,7 +284,7 @@ $ bun tools/classify-issue.ts --owner acme --repo app --issue 42
 
 The classification is deterministic and testable. An issue with 5 checkboxes and acceptance criteria always scores 8+, always routes to "lean." The skill reads `complexity` and follows the matching procedure. The LLM doesn't decide the complexity level.
 
-#### Level 3: Instructions
+#### Procedure
 
 The tool scores, classifies, and builds the complete planning procedure. It returns an `instructions` field with literal steps the LLM follows verbatim.
 
@@ -297,19 +297,19 @@ $ bun tools/analyze-issue.ts --owner acme --repo app --issue 42
 }
 ```
 
-At Level 3, the LLM does zero branching. It calls the tool, reads `instructions`, and follows them. All decision logic, all branching, all procedure selection is in deterministic, testable code. The LLM is a pure executor.
+With a procedure tool, the LLM does zero branching. It calls the tool, reads `instructions`, and follows them. All decision logic, all branching, all procedure selection is in deterministic, testable code. The LLM is a pure executor.
 
 > These examples are simplified for illustration. Real tools handle edge cases, validation, and richer output structures.
 
 ---
 
-### When to Use Each Level
+### When to Use Each Tool Type
 
 **Data** when the LLM needs facts to make a judgment call. The situation is ambiguous, the data is one input among many, and you want the LLM's ability to synthesize.
 
 **Classification** when you want testable, deterministic routing but the procedures are simple enough to live in the skill file. You get consistent categorization without building full instruction sets.
 
-**Instructions** when there are 3+ paths with materially different multi-step procedures, or when invisible failures are unacceptable. This is the highest investment but also the highest reliability.
+**Procedure** when there are 3+ paths with materially different multi-step procedures, or when invisible failures are unacceptable. This is the highest investment but also the highest reliability.
 
 ---
 
@@ -396,7 +396,7 @@ The skill defines the _workflow_. The tools do the _work_. The LLM follows the w
 
 How the skill consumes tool output depends on what the tool returns. Because every tool describes its own output shape (see [Self-Describing Tools](/patterns/deterministic-tools)), the skill reads documented fields instead of guessing at them. The three levels mirror the tool spectrum.
 
-#### Level 1: Data. The LLM interprets.
+#### Data. The LLM interprets.
 
 ```markdown
 ## Phase 1: Gather context
@@ -409,7 +409,7 @@ How the skill consumes tool output depends on what the tool returns. Because eve
 
 The LLM has discretion. It reads the raw signals, applies judgment, and picks an approach. This is useful when the situation genuinely needs interpretation, when the data is one signal among many.
 
-#### Level 2: Classification. The skill branches.
+#### Classification. The skill branches.
 
 ```markdown
 ## Phase 1: Classify
@@ -443,7 +443,7 @@ Follow the procedure for the returned complexity:
 
 The classification is deterministic (the tool decided based on signal scoring). The procedures live in the skill. The LLM reads the complexity and follows the matching section. This works well when the number of routes is small and the procedures are short enough to fit in a skill file.
 
-#### Level 3: Instructions. The LLM follows verbatim.
+#### Procedure. The LLM follows verbatim.
 
 ```markdown
 ## Phase 1: Analyze

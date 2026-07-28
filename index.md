@@ -44,7 +44,7 @@ Tools do the heavy lifting. Skills wire them together into a workflow the LLM ca
 
 Not all tools are equal. They exist on a spectrum based on how much decision-making they absorb from the LLM.
 
-### L1: Data
+### Data
 
 The tool returns structured facts. The LLM interprets them and decides what to do.
 
@@ -53,7 +53,7 @@ Tool returns: { "checkboxes": 3, "file_paths": 2, "code_blocks": 1 }
 LLM does: reads the signals, makes a judgment call
 ```
 
-### L2: Classification
+### Classification
 
 The tool scores signals and classifies. It returns a complexity level. The skill branches on it.
 
@@ -62,7 +62,7 @@ Tool returns: { "complexity": "standard", "score": 6 }
 LLM does: reads the complexity, follows the matching branch
 ```
 
-### L3: Instructions
+### Procedure
 
 The tool scores, classifies, and builds the complete procedure. The LLM follows it verbatim.
 
@@ -71,7 +71,7 @@ Tool returns: { "complexity": "standard", "instructions": "## Step 1: Read the i
 LLM does: TOOL decides everything. LLM executes verbatim. Zero branching.
 ```
 
-At Level 3, the tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
+A procedure tool becomes a prompt factory: it generates the exact procedure the LLM should follow based on deterministic analysis. The LLM just executes. All branching logic lives in code you can test and debug.
 
 This inverts the usual tool-use pattern. Instead of the LLM using tools to help with its plan, the tool builds the plan and the LLM carries it out.
 

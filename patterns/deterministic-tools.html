@@ -8,7 +8,7 @@
     <title>Deterministic Tools for AI Agents | Code-First Agents</title>
     <meta
       name="description"
-      content="Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Instructions."
+      content="Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Procedure."
     />
     <meta
       name="keywords"
@@ -98,7 +98,7 @@
         "@type": "TechArticle",
         "headline": "Deterministic Tools for AI Agents",
         "name": "Deterministic Tools for AI Agents | Code-First Agents",
-        "description": "Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Instructions.",
+        "description": "Build code-first CLI tools for AI agents with a standard contract. Deterministic processing, JSON output, self-describing schemas, and the spectrum from Data to Procedure.",
         "url": "https://code-first-agents.com/patterns/deterministic-tools.html",
         "mainEntityOfPage": {
           "@type": "WebPage",
@@ -488,7 +488,7 @@ console.log(JSON.stringify(<span class="prop">Output</span>.parse(<span class="p
             </p>
           </div>
 
-          <h3>Level 1: Data</h3>
+          <h3>Data</h3>
           <div class="prose">
             <p>
               The tool returns raw signals from the issue body. The LLM
@@ -543,7 +543,7 @@ console.log(
             </p>
           </div>
 
-          <h3>Level 2: Classification</h3>
+          <h3>Classification</h3>
           <div class="prose">
             <p>
               The tool counts signals and classifies issue complexity. It
@@ -559,7 +559,7 @@ console.log(
 
 <span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-<span class="comment">// ... same fetch + signal detection as Level 1 ...</span>
+<span class="comment">// ... same fetch + signal detection as the data tool ...</span>
 
 <span class="kw">const</span> <span class="prop">signals</span> = {
   <span class="prop">checkboxes</span>: (<span class="prop">body</span>.match(<span class="str">/- \[[ x]\]/g</span>) ?? []).length,
@@ -596,7 +596,7 @@ console.log(JSON.stringify({ <span class="prop">complexity</span>, <span class="
             </p>
           </div>
 
-          <h3>Level 3: Instructions</h3>
+          <h3>Procedure</h3>
           <div class="prose">
             <p>
               The tool scores, classifies, and builds the complete planning
@@ -612,7 +612,7 @@ console.log(JSON.stringify({ <span class="prop">complexity</span>, <span class="
 
 <span class="kw">import</span> { <span class="fn">parseArgs</span> } <span class="kw">from</span> <span class="str">"util"</span>;
 
-<span class="comment">// ... same fetch + signal detection + scoring as Level 2 ...</span>
+<span class="comment">// ... same fetch + signal detection + scoring as the classification tool ...</span>
 
 <span class="kw">const</span> <span class="prop">complexity</span> = <span class="prop">score</span> &gt;= <span class="num">7</span> ? <span class="str">"lean"</span> : <span class="prop">score</span> &gt;= <span class="num">4</span> ? <span class="str">"standard"</span> : <span class="str">"full"</span>;
 
@@ -657,10 +657,10 @@ console.log(
 
           <div class="prose">
             <p>
-              At Level 3, the LLM does zero branching. It calls the tool, reads
-              <code>instructions</code>, and follows them. All decision logic,
-              all branching, all procedure selection is in deterministic,
-              testable code. The LLM is a pure executor.
+              With a procedure tool, the LLM does zero branching. It calls the
+              tool, reads <code>instructions</code>, and follows them. All
+              decision logic, all branching, all procedure selection is in
+              deterministic, testable code. The LLM is a pure executor.
             </p>
             <p>
               <em
@@ -671,10 +671,10 @@ console.log(
           </div>
         </section>
 
-        <!-- When to Use Each Level -->
+        <!-- When to Use Each Tool Type -->
         <section class="section">
-          <div class="section__marker">Levels</div>
-          <h2 class="section__title">When to Use Each Level</h2>
+          <div class="section__marker">Tool types</div>
+          <h2 class="section__title">When to Use Each Tool Type</h2>
           <div class="prose">
             <p>
               <strong>Data</strong> when the LLM needs facts to make a judgment
@@ -688,7 +688,7 @@ console.log(
               building full instruction sets.
             </p>
             <p>
-              <strong>Instructions</strong> when there are 3+ paths with
+              <strong>Procedure</strong> when there are 3+ paths with
               materially different multi-step procedures, or when invisible
               failures are unacceptable. This is the highest investment but also
               the highest reliability.

@@ -230,7 +230,7 @@
             "name": "What is the spectrum of deterministic tools?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Deterministic tools exist on a spectrum of three levels. Level 1 (Data): the tool returns structured facts, the LLM interprets. Level 2 (Classification): the tool scores and classifies, the skill branches. Level 3 (Instructions): the tool builds the complete procedure, the LLM follows it verbatim with zero branching."
+              "text": "Deterministic tools exist on a spectrum of three tool types. Data: the tool returns structured facts, the LLM interprets. Classification: the tool scores and classifies, the skill branches. Procedure: the tool builds the complete procedure, the LLM follows it verbatim with zero branching."
             }
           }
         ]
@@ -440,7 +440,7 @@
           <div class="spectrum">
             <div class="spectrum-dot" id="spectrumDot"></div>
 
-            <!-- L1: Data -->
+            <!-- Data -->
             <div class="spectrum-step" data-level="1">
               <div class="spectrum-step__center">
                 <div class="spectrum-step__tick"></div>
@@ -448,7 +448,6 @@
               <div class="spectrum-step__card">
                 <div class="spectrum-step__content">
                   <div class="spectrum-step__header">
-                    <span class="spectrum-step__level">L1</span>
                     <span class="spectrum-step__title">Data</span>
                   </div>
                   <div class="spectrum-step__desc">
@@ -469,7 +468,7 @@
               </div>
             </div>
 
-            <!-- L2: Classification -->
+            <!-- Classification -->
             <div class="spectrum-step spectrum-step--l2" data-level="2">
               <div class="spectrum-step__center">
                 <div class="spectrum-step__tick"></div>
@@ -477,7 +476,6 @@
               <div class="spectrum-step__card">
                 <div class="spectrum-step__content">
                   <div class="spectrum-step__header">
-                    <span class="spectrum-step__level">L2</span>
                     <span class="spectrum-step__title">Classification</span>
                   </div>
                   <div class="spectrum-step__desc">
@@ -498,7 +496,7 @@
               </div>
             </div>
 
-            <!-- L3: Instructions -->
+            <!-- Procedure -->
             <div class="spectrum-step spectrum-step--l3" data-level="3">
               <div class="spectrum-step__center">
                 <div class="spectrum-step__tick"></div>
@@ -506,8 +504,7 @@
               <div class="spectrum-step__card">
                 <div class="spectrum-step__content">
                   <div class="spectrum-step__header">
-                    <span class="spectrum-step__level">L3</span>
-                    <span class="spectrum-step__title">Instructions</span>
+                    <span class="spectrum-step__title">Procedure</span>
                   </div>
                   <div class="spectrum-step__desc">
                     The tool scores, classifies, and builds the complete
@@ -531,7 +528,7 @@
 
           <div class="prose" style="margin-top: 32px">
             <p>
-              At Level 3, the tool becomes a prompt factory: it generates the
+              A procedure tool becomes a prompt factory: it generates the
               exact procedure the LLM should follow based on deterministic
               analysis. The LLM just executes. All branching logic lives in code
               you can test and debug.

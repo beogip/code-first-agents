@@ -51,7 +51,7 @@ The skill defines the *workflow*. The tools do the *work*. The LLM follows the w
 
 How the skill consumes tool output depends on what the tool returns. Because every tool describes its own output shape (see [Self-Describing Tools](deterministic-tools.md#self-describing-tools)), the skill reads documented fields instead of guessing at them. The three levels mirror the tool spectrum.
 
-### Level 1: Data. The LLM interprets.
+### Data. The LLM interprets.
 
 ```markdown
 ## Phase 1: Gather context
@@ -64,7 +64,7 @@ How the skill consumes tool output depends on what the tool returns. Because eve
 
 The LLM has discretion. It reads the raw signals, applies judgment, and picks an approach. This is useful when the situation genuinely needs interpretation, when the data is one signal among many.
 
-### Level 2: Classification. The skill branches.
+### Classification. The skill branches.
 
 ```markdown
 ## Phase 1: Classify
@@ -98,7 +98,7 @@ Follow the procedure for the returned complexity:
 
 The classification is deterministic (the tool decided based on signal scoring). The procedures live in the skill. The LLM reads the complexity and follows the matching section. This works well when the number of routes is small and the procedures are short enough to fit in a skill file.
 
-### Level 3: Instructions. The LLM follows verbatim.
+### Procedure. The LLM follows verbatim.
 
 ```markdown
 ## Phase 1: Analyze

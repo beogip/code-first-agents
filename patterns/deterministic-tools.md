@@ -88,7 +88,7 @@ You pay a dependency (Zod or Pydantic). You get a contract the LLM can discover,
 
 The same problem (deciding how to plan a GitHub issue) can be solved at three levels of sophistication. Each level moves more decision-making from the LLM to code.
 
-### Level 1: Data
+### Data
 
 The tool returns raw signals from the issue body. The LLM interprets them.
 
@@ -99,7 +99,7 @@ $ bun tools/get-issue-signals.ts --owner acme --repo app --issue 42
 
 The LLM gets raw signals and decides what to do. It has full discretion. Good for cases where the data needs interpretation in context.
 
-### Level 2: Classification
+### Classification
 
 The tool counts signals, scores them deterministically, and classifies issue complexity. It returns a `complexity` field that the skill can branch on.
 
@@ -110,7 +110,7 @@ $ bun tools/classify-issue.ts --owner acme --repo app --issue 42
 
 The classification is deterministic and testable. An issue with 5 checkboxes and acceptance criteria always scores 8+, always routes to "lean." The skill reads `complexity` and follows the matching procedure. The LLM doesn't decide the complexity level.
 
-### Level 3: Instructions
+### Procedure
 
 The tool scores, classifies, and builds the complete planning procedure. It returns an `instructions` field with literal steps the LLM follows verbatim.
 
@@ -123,17 +123,17 @@ $ bun tools/analyze-issue.ts --owner acme --repo app --issue 42
 }
 ```
 
-At Level 3, the LLM does zero branching. It calls the tool, reads `instructions`, and follows them. All decision logic, all branching, all procedure selection is in deterministic, testable code. The LLM is a pure executor.
+With a procedure tool, the LLM does zero branching. It calls the tool, reads `instructions`, and follows them. All decision logic, all branching, all procedure selection is in deterministic, testable code. The LLM is a pure executor.
 
 > These examples are simplified for illustration. Real tools handle edge cases, validation, and richer output structures.
 
-## When to Use Each Level
+## When to Use Each Tool Type
 
 **Data** when the LLM needs facts to make a judgment call. The situation is ambiguous, the data is one input among many, and you want the LLM's ability to synthesize.
 
 **Classification** when you want testable, deterministic routing but the procedures are simple enough to live in the skill file. You get consistent categorization without building full instruction sets.
 
-**Instructions** when there are 3+ paths with materially different multi-step procedures, or when invisible failures are unacceptable. This is the highest investment but also the highest reliability.
+**Procedure** when there are 3+ paths with materially different multi-step procedures, or when invisible failures are unacceptable. This is the highest investment but also the highest reliability.
 
 ## Trade-offs
 
