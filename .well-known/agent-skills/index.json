@@ -6,14 +6,14 @@
       "type": "content-index",
       "description": "LLM-readable index of all pages on code-first-agents.com with links to markdown versions",
       "url": "https://code-first-agents.com/llms.txt",
-      "sha256": "18bee39d6422e689d61d68b73531f337372b207609a5eaac47df1ee71c5638d9"
+      "sha256": "0e47bd105cf2ff938e1b263ce5f17f22869ca7e91708eeac6d7e0598dd89b362"
     },
     {
       "name": "llms-full-content",
       "type": "content-full",
       "description": "Complete site content in a single markdown document for bulk AI ingestion",
       "url": "https://code-first-agents.com/llms-full.txt",
-      "sha256": "fee77bd7b1b00aa879279d5df6e0d4b3ef49957761254439f38d683ef718f9fb"
+      "sha256": "05ba7dda6c8dc4f4027db37f2669dcb33017715b0608eb9e3aebf1e5f8c082fb"
     }
   ]
 }

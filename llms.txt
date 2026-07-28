@@ -6,7 +6,7 @@ The site documents two patterns and a three-level spectrum showing how much deci
 
 ## Pages
 
-- [Home](https://code-first-agents.com/index.md): The thesis behind code-first agents, the two-component architecture (tools + skills), the L1/L2/L3 spectrum of deterministic tools, and decision criteria for when to move logic from the LLM to code.
+- [Home](https://code-first-agents.com/index.md): The thesis behind code-first agents, the two-component architecture (tools + skills), the Data, Classification, and Procedure spectrum of deterministic tools, and decision criteria for when to move logic from the LLM to code.
 - [Deterministic Tools](https://code-first-agents.com/patterns/deterministic-tools.md): How to build CLI tools with a standard contract (named params in, JSON out). Covers the tool contract, self-describing schemas with Zod/Pydantic, and progressive examples at all three spectrum levels.
 - [Skill Orchestration](https://code-first-agents.com/patterns/skill-orchestration.md): How to write SKILL.md files that consume tool output and turn LLMs into reliable executors. Covers consuming output at each level, chaining tools, loop guards, scope guards, and the verbatim execution principle.
 
@@ -18,7 +18,7 @@ The site documents two patterns and a three-level spectrum showing how much deci
 
 The example tools and skill referenced on the site live in the [`main` branch](https://github.com/beogip/code-first-agents/tree/main/examples) of the repository.
 
-- [get-issue-signals.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/get-issue-signals.ts): Level 1 (Data) tool
-- [classify-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/classify-issue.ts): Level 2 (Classification) tool
-- [analyze-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/analyze-issue.ts): Level 3 (Instructions) tool
-- [plan-issue/SKILL.md](https://github.com/beogip/code-first-agents/blob/main/examples/skills/plan-issue/SKILL.md): Example skill that consumes analyze-issue.ts at Level 3
+- [get-issue-signals.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/get-issue-signals.ts): Data tool
+- [classify-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/classify-issue.ts): Classification tool
+- [analyze-issue.ts](https://github.com/beogip/code-first-agents/blob/main/examples/tools/analyze-issue.ts): Procedure tool
+- [plan-issue/SKILL.md](https://github.com/beogip/code-first-agents/blob/main/examples/skills/plan-issue/SKILL.md): Example skill that consumes analyze-issue.ts as a procedure tool

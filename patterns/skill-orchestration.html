@@ -172,8 +172,8 @@
           },
           {
             "@type": "HowToStep",
-            "name": "Consume tool output at the right level",
-            "text": "At Level 1 (Data), the LLM interprets. At Level 2 (Classification), the skill branches. At Level 3 (Instructions), the LLM follows verbatim."
+            "name": "Consume tool output by tool type",
+            "text": "With a data tool, the LLM interprets. With a classification tool, the skill branches. With a procedure tool, the LLM follows verbatim."
           },
           {
             "@type": "HowToStep",
@@ -366,7 +366,7 @@ Summarize the plan and ask the user to approve before coding.</code>
             </p>
           </div>
 
-          <h3>Level 1: Data — The LLM interprets</h3>
+          <h3>Data — The LLM interprets</h3>
           <!-- prettier-ignore -->
           <div class="code-block">
 <code><span class="comment">## Phase 1: Gather context</span>
@@ -385,7 +385,7 @@ Summarize the plan and ask the user to approve before coding.</code>
             </p>
           </div>
 
-          <h3>Level 2: Classification — The skill branches</h3>
+          <h3>Classification — The skill branches</h3>
           <!-- prettier-ignore -->
           <div class="code-block">
 <code><span class="comment">## Phase 1: Classify</span>
@@ -426,7 +426,7 @@ Follow the procedure for the returned complexity:
             </p>
           </div>
 
-          <h3>Level 3: Instructions — The LLM follows verbatim</h3>
+          <h3>Procedure — The LLM follows verbatim</h3>
           <!-- prettier-ignore -->
           <div class="code-block">
 <code><span class="comment">## Phase 1: Analyze</span>
