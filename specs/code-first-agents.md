@@ -1,6 +1,6 @@
 # Code-First Agents
 
-**Status:** Living document · **Last updated:** 2026-04-11
+**Status:** Living document · **Last updated:** 2026-07-28
 
 ## Opening thesis
 
@@ -14,7 +14,7 @@ A **deterministic decision** is one where the same input should always produce t
 
 Two roles do the work together. **Tools** are the producer side: small CLI scripts with a fixed contract. **Skills** are the consumer side: markdown files the LLM reads and follows, calling tools phase by phase. Tools absorb decisions into code. Skills sequence the calls. The LLM becomes the glue between them.
 
-Between pure LLM decisions and pure code decisions there is a spectrum. A tool can return raw data and hand interpretation back to the LLM. It can return a category and let the skill branch. It can return a complete procedure the LLM executes literally. We call this the **output spectrum**, and it runs from Level 1 to Level 3.
+Between pure LLM decisions and pure code decisions there is a spectrum. A tool can return raw data and hand interpretation back to the LLM. It can return a category and let the skill branch. It can return a complete procedure the LLM executes literally. We call this the **output spectrum**, and it runs from Data to Procedure.
 
 ## When (and when not) to use Code-First
 
@@ -35,25 +35,27 @@ Anthropic's [Building Effective Agents](https://www.anthropic.com/research/build
 
 ## The Spectrum
 
-The three levels describe how much of the decision lives in the tool.
+The three tool types describe how much of the decision lives in code.
 
-**Level 1: Data.** The tool returns raw, structured signals. The LLM interprets them and decides what to do. Most of the decision still lives in the model.
+**Data.** The tool returns raw, structured signals. The LLM interprets them and decides what to do. Most of the decision still lives in the model.
 
-**Level 2: Classification.** The tool returns a category derived from the input, along with the signals it used. The skill branches on the category. The decision is split: the tool classifies, the LLM acts on the class.
+**Classification.** The tool returns a category derived from the input, along with the signals it used. The skill branches on the category. The decision is split: the tool classifies, the LLM acts on the class.
 
-**Level 3: Instructions.** The tool returns a complete procedure, usually markdown, that the caller executes literally. The LLM operates as an executor. The decision lives entirely in code.
+**Procedure.** The tool returns a complete, step-by-step sequence, usually markdown, that the caller executes literally. The LLM operates as an executor. The decision lives entirely in code.
 
 A rough diagram:
 
 ```
-  L1 Data    ->    L2 Classification    ->    L3 Instructions
-  (LLM interprets) (LLM branches)             (LLM executes)
+  Data      ->      Classification  ->  Procedure
+  (LLM interprets)  (LLM branches)      (LLM executes)
 
-  more LLM    <=========================>    less LLM
-  more flexible                               more reliable
+  more LLM    <==========================>    less LLM
+  more flexible                          more reliable
 ```
 
 As we move right, flexibility drops and reliability rises.
+
+Earlier revisions numbered these Level 1, Level 2, and Level 3, abbreviated L1, L2, and L3, and named the third one Instructions. Those names are deprecated. Data, Classification, and Procedure replace them one for one.
 
 ## Pattern 01: Deterministic Tools
 
@@ -67,7 +69,7 @@ This is the skeleton of a deterministic tool. It is not real code, it is the for
 
 ```
 #!/usr/bin/env bun
-// Tool at Level L{1|2|3}
+// Tool type: {data | classification | procedure}
 
 const { values } = parseArgs({ /* named params */ });
 
@@ -94,19 +96,19 @@ Every deterministic tool shares the same contract:
 - **Self-describing (recommended).** Tools expose their output schema via a `--schema` flag, so callers can validate the contract and CI can catch drift.
 - **Fail loud.** Errors use a non-zero exit code and write an error message to stderr.
 
-### The three levels
+### The three tool types
 
-**L1, Data.** The tool returns raw structural signals extracted from the input. The LLM reads the signals and decides what to do.
+**Data.** The tool returns raw structural signals extracted from the input. The LLM reads the signals and decides what to do.
 *When to use:* The input is ambiguous, or the downstream procedure is trivial and does not justify encoding.
-*Examples where L1 is useful:* Extracting structured fields from a free-form user message. Pulling metadata from a document before summarization. Gathering telemetry that the LLM will synthesize into a narrative.
+*Examples where a data tool is useful:* Extracting structured fields from a free-form user message. Pulling metadata from a document before summarization. Gathering telemetry that the LLM will synthesize into a narrative.
 
-**L2, Classification.** The tool returns a category derived from the input, plus the signals it used. The skill branches on the category.
+**Classification.** The tool returns a category derived from the input, plus the signals it used. The skill branches on the category.
 *When to use:* Routing is testable and the branches are short enough to inline in the skill. The branches share most of their work.
-*Examples where L2 is useful:* Deciding whether a support ticket is a bug, a question, or a feature request. Routing an incoming document to the right extractor. Picking between a short and a long response mode based on input size.
+*Examples where a classification tool is useful:* Deciding whether a support ticket is a bug, a question, or a feature request. Routing an incoming document to the right extractor. Picking between a short and a long response mode based on input size.
 
-**L3, Instructions.** The tool returns a complete procedure, usually markdown, that the caller executes verbatim. The LLM operates as an executor.
+**Procedure.** The tool returns a complete, step-by-step sequence, usually markdown, that the caller executes verbatim. The LLM operates as an executor.
 *When to use:* There are three or more branches with materially different multi-step procedures, and drift between branches is unacceptable. The procedure has to be auditable end to end.
-*Examples where L3 is useful:* Driving a multi-phase workflow that differs per case. Generating the exact steps of a release process before the LLM carries them out. Producing the playbook for an incident type before the agent acts on it.
+*Examples where a procedure tool is useful:* Driving a multi-phase workflow that differs per case. Generating the exact steps of a release process before the LLM carries them out. Producing the playbook for an incident type before the agent acts on it.
 
 ### Invariants
 
@@ -122,7 +124,7 @@ Every deterministic tool shares the same contract:
 
 ### Reference implementation
 
-Three reference tools live in `examples/tools/`, one per level, built around a GitHub issue planning workflow. See the [examples README](../examples/README.md) for field names, scoring details, and runtime notes. The examples are illustrative, not normative. The pattern is defined by this document, not by the thresholds in the reference tools.
+Three reference tools live in `examples/tools/`, one per tool type, built around a GitHub issue planning workflow. See the [examples README](../examples/README.md) for field names, scoring details, and runtime notes. The examples are illustrative, not normative. The pattern is defined by this document, not by the thresholds in the reference tools.
 
 ## Pattern 02: Skill Orchestration
 
@@ -152,10 +154,10 @@ tools:
 
 ## Phase 2: <act>
 
-Depending on the tool's level, one of:
-- Interpret the signals (L1).
-- Branch on the category (L2).
-- Execute the instructions verbatim (L3).
+Depending on the tool type, one of:
+- Interpret the signals (data tool).
+- Branch on the category (classification tool).
+- Execute the instructions verbatim (procedure tool).
 
 ## Phase 3: <report>
 
@@ -176,19 +178,19 @@ A skill is structured markdown, not prose. The contract is:
 
 ### The three skill shapes
 
-The level of the tool decides the shape of the skill.
+The tool type decides the shape of the skill.
 
-**L1, thick skill.** The skill hands raw signals to the LLM with an interpretation prompt. The model does the work the tool did not absorb. Most of the logic sits in the skill and in the model.
+**Thick skill.** The skill hands raw signals to the LLM with an interpretation prompt. The model does the work the tool did not absorb. Most of the logic sits in the skill and in the model.
 
-**L2, branching skill.** The skill contains explicit `If <category>, do <branch>` sections. The LLM reads the class, picks the branch, and follows it. The skill is the routing table.
+**Branching skill.** The skill contains explicit `If <category>, do <branch>` sections. The LLM reads the class, picks the branch, and follows it. The skill is the routing table.
 
-**L3, thin skill.** The skill is a shell of three phases: run the tool, execute the returned instructions, report. No branching. No interpretation. At this level the skill is often shorter than the tool it depends on.
+**Thin skill.** The skill is a shell of three phases: run the tool, execute the returned instructions, report. No branching. No interpretation. At this end of the spectrum the skill is often shorter than the tool it depends on.
 
 ### Invariants
 
 - **Tools are trusted.** A skill reads documented fields from tool output. It does not inspect the tool's source to decide what to do.
 - **One tool, one phase.** A phase invokes at most one tool. If two tools are needed, that is two phases.
-- **Verbatim execution at L3.** When a skill consumes an L3 tool, it does not modify, skip, add steps, or override tool decisions. It follows the instructions literally. No probabilistic branching. The LLM is an executor, nothing more.
+- **Verbatim execution.** When a skill consumes a procedure tool, it does not modify, skip, add steps, or override tool decisions. It follows the instructions literally. No probabilistic branching. The LLM is an executor, nothing more.
 - **No hidden state.** A skill that depends on memory between runs is a different pattern. Skills run from their first phase every time.
 
 ### Anti-patterns
@@ -205,13 +207,13 @@ The registry lives in [`anti-patterns/`](./anti-patterns/). Each heuristic has i
 
 ### Reference implementation
 
-A reference skill lives in `examples/skills/plan-issue/SKILL.md`. It consumes the L3 reference tool and demonstrates a thin skill at the far end of the spectrum. See the [examples README](../examples/README.md) for the full walkthrough. As with the tools, the example is illustrative, not normative.
+A reference skill lives in `examples/skills/plan-issue/SKILL.md`. It consumes the reference procedure tool and demonstrates a thin skill at the far end of the spectrum. See the [examples README](../examples/README.md) for the full walkthrough. As with the tools, the example is illustrative, not normative.
 
 ## How the patterns compose
 
 Deterministic Tools and Skill Orchestration are two halves of the same architecture. Tools are the producer side. Skills are the consumer side. Neither is useful alone. A tool without a skill is a script nobody calls. A skill without deterministic tools is a prose prompt with extra structure.
 
-The connection point is the tool contract: named params in, JSON to stdout, optionally a `--schema` flag. When tools are self-describing, skills can trust them without reading their internals. The spectrum runs on both sides because the shape of the tool's output decides the shape of the skill that consumes it. The more the tool absorbs, the thinner the skill becomes. At Level 3, the skill is a short shell and the LLM operates as an executor.
+The connection point is the tool contract: named params in, JSON to stdout, optionally a `--schema` flag. When tools are self-describing, skills can trust them without reading their internals. The spectrum runs on both sides because the shape of the tool's output decides the shape of the skill that consumes it. The more the tool absorbs, the thinner the skill becomes. With a procedure tool, the skill is a short shell and the LLM operates as an executor.
 
 ## Anti-patterns
 
@@ -225,11 +227,27 @@ Three principles hold the pattern together.
 
 1. Push deterministic work into code. Keep the LLM for judgment.
 2. Let the shape of the tool's output decide the shape of the skill that consumes it.
-3. At Level 3, the tool writes the prompt the LLM will execute.
+3. A procedure tool writes the prompt the LLM will execute.
 
 ## Evolution
 
 This section tracks meaningful changes to the patterns over time. Entries are chronological, newest first.
+
+### 2026-07-28, Tool types replace the numbered levels
+
+The three tool types are now named Data, Classification, and Procedure. They were previously numbered, and the third one was also called Instructions. A number said where a tool sat on the spectrum. It never said what the tool returns. The new names do.
+
+**Why these three:**
+
+- Each name states what the tool returns, so a reader who meets the term once can place it without the diagram.
+- Procedure replaces Instructions because the tool output contract already carries an `instructions` field. One word for two referents made the spec ambiguous.
+- The names stay lexically distinct from the skill shapes, which remain thick, branching, and thin.
+
+**Aliases.** The old identifiers are deprecated, not erased. The Spectrum section carries a note mapping all seven of them to their replacements, so documents that still cite the numbered names stay resolvable.
+
+**Scope.** The rename covers this file, the anti-patterns registry, the root README, `examples/`, and `CONTRIBUTING.md`. The published site follows in a separate change.
+
+**Prior entries migrated.** The Evolution entries below this one had their vocabulary migrated to the new names. Leaving them would have made them cite an invariant that no longer exists. That invariant is now named "Verbatim execution".
 
 ### 2026-04-11, Anti-patterns registry
 
@@ -245,7 +263,7 @@ Introduces an anti-patterns registry at `specs/anti-patterns/`. The registry hol
 - `CONTRIBUTING.md` gains a "Proposing a heuristic" section. New heuristics land in the spec before any scanner code is written. Retroactive heuristics validate the scanner's shape against the abstract description.
 - Pattern 02 gains an "Anti-patterns" subsection pointing to the registry. Invariants describe the healthy shape; the registry describes the shapes we see when a skill drifts.
 
-**Out of scope for the seed registry:** `prose_conditional` and `missing_instructions` are not proposed as standalone heuristics because they map directly to Pattern 02 "No hidden logic" and "Verbatim execution at L3" respectively. The registry README names them so they are not re-proposed.
+**Out of scope for the seed registry:** `prose_conditional` and `missing_instructions` are not proposed as standalone heuristics because they map directly to Pattern 02 "No hidden logic" and "Verbatim execution" respectively. The registry README names them so they are not re-proposed.
 
 ### 2026-04-10, Initial spec
 
@@ -253,29 +271,29 @@ First formal specification derived from the site content and the reference imple
 
 **Patterns included:**
 
-- **Deterministic Tools** with the three-level spectrum (Data, Classification, Instructions).
-- **Skill Orchestration** with a spectrum that mirrors the tool levels.
+- **Deterministic Tools** with the output spectrum (Data, Classification, Procedure).
+- **Skill Orchestration** with a spectrum that mirrors the tool types.
 
 **Key concepts formalized:**
 
 - **Tool contract.** Named params in, JSON to stdout, no LLM calls inside.
 - **Self-describing tools.** `--schema` flag, schema-as-validator, CI drift detection.
-- **Prompt factory.** Level 3 tools that produce the literal prompt the LLM will execute.
-- **Verbatim execution principle.** At Level 3, the LLM operates as a pure executor, and invariants forbid modification.
-- **Output spectrum.** Data, Classification, Instructions as a continuum of decision absorption.
+- **Prompt factory.** Procedure tools that produce the literal prompt the LLM will execute.
+- **Verbatim execution principle.** With a procedure tool, the LLM operates as a pure executor, and invariants forbid modification.
+- **Output spectrum.** Data, Classification, Procedure as a continuum of decision absorption.
 
 **Reference implementations committed to `examples/`:**
 
-- `examples/tools/get-issue-signals.ts`, Level 1 (Data)
-- `examples/tools/classify-issue.ts`, Level 2 (Classification)
-- `examples/tools/analyze-issue.ts`, Level 3 (Instructions, prompt factory)
-- `examples/skills/plan-issue/SKILL.md`, reference Level 3 skill
+- `examples/tools/get-issue-signals.ts`, Data
+- `examples/tools/classify-issue.ts`, Classification
+- `examples/tools/analyze-issue.ts`, Procedure (prompt factory)
+- `examples/skills/plan-issue/SKILL.md`, reference thin skill
 
 ## How to update this spec
 
 This document is the canonical description of the Code-First Agents pattern in the abstract. Tutorials, design rationale, and example code belong elsewhere. Concrete implementations live in `examples/`. The rendered version is published at https://beogip.github.io/code-first-agents/.
 
-**When to update.** Update when the pattern itself changes. New invariants, clarified contracts, new levels, or new composing patterns all qualify. Do not update when only an example changes. That lives in `examples/` and its README.
+**When to update.** Update when the pattern itself changes. New invariants, clarified contracts, new tool types, or new composing patterns all qualify. Do not update when only an example changes. That lives in `examples/` and its README.
 
 **How to update.**
 
