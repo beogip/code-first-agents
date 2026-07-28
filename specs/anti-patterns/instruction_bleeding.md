@@ -66,7 +66,7 @@ Shared setup lives before the branch. The branch only holds the work that actual
 
 ## Rationale
 
-Instruction bleeding is the shape of a skill that is one edit away from being wrong. The moment someone changes "Run the unit tests" in one branch and not the other, the two branches describe different procedures. The LLM reading the file has no way to decide which copy is authoritative. Fixing this by hoisting shared setup out of the branches removes the drift surface. When the shared prefix is large enough that hoisting feels awkward, the branches are probably a Level 3 tool.
+Instruction bleeding is the shape of a skill that is one edit away from being wrong. The moment someone changes "Run the unit tests" in one branch and not the other, the two branches describe different procedures. The LLM reading the file has no way to decide which copy is authoritative. Fixing this by hoisting shared setup out of the branches removes the drift surface. When the shared prefix is large enough that hoisting feels awkward, the branches are probably a procedure tool.
 
 ## Relationship to existing invariants
 

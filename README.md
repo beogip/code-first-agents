@@ -21,30 +21,30 @@ For the formal specification of both patterns, including the contract, trade-off
 
 Tools exist on a spectrum based on how much decision-making they absorb from the LLM:
 
-| Level | Tool returns | LLM does | Example |
+| Tool type | Tool returns | LLM does | Example |
 |-------|-------------|----------|---------|
-| **1. Data** | Structured facts | Interprets, decides | [`get-issue-signals.ts`](examples/tools/get-issue-signals.ts) |
-| **2. Classification** | Data + classification | Reads the class, branches | [`classify-issue.ts`](examples/tools/classify-issue.ts) |
-| **3. Instructions** | Literal procedure | Executes verbatim | [`analyze-issue.ts`](examples/tools/analyze-issue.ts) |
+| **Data** | Structured facts | Interprets, decides | [`get-issue-signals.ts`](examples/tools/get-issue-signals.ts) |
+| **Classification** | Data + classification | Reads the class, branches | [`classify-issue.ts`](examples/tools/classify-issue.ts) |
+| **Procedure** | Literal procedure | Executes verbatim | [`analyze-issue.ts`](examples/tools/analyze-issue.ts) |
 
-At Level 3, the tool becomes a prompt factory. The LLM is a pure executor.
+A procedure tool becomes a prompt factory. The LLM is a pure executor.
 
 ## Examples
 
-The [`examples/`](examples/) directory contains a complete GitHub issue planning workflow that demonstrates the three levels. All tools run with [Bun](https://bun.sh):
+The [`examples/`](examples/) directory contains a complete GitHub issue planning workflow that demonstrates the three tool types. All tools run with [Bun](https://bun.sh):
 
 ```bash
-# Level 1: raw signals from the issue body
+# Data: raw signals from the issue body
 bun examples/tools/get-issue-signals.ts --owner acme --repo app --issue 42
 
-# Level 2: deterministic classification
+# Classification: deterministic category
 bun examples/tools/classify-issue.ts --owner acme --repo app --issue 42
 
-# Level 3: complete planning procedure
+# Procedure: complete planning steps
 bun examples/tools/analyze-issue.ts --owner acme --repo app --issue 42
 ```
 
-See [`examples/skills/plan-issue/SKILL.md`](examples/skills/plan-issue/SKILL.md) for a full skill that orchestrates `analyze-issue.ts` at Level 3.
+See [`examples/skills/plan-issue/SKILL.md`](examples/skills/plan-issue/SKILL.md) for a full skill that orchestrates `analyze-issue.ts` as a procedure tool.
 
 ## Specs
 

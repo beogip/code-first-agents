@@ -26,7 +26,7 @@ Heuristics submitted and waiting for pattern-owner review.
 ### Accepted
 
 - [ambiguous_threshold](./ambiguous_threshold.md), vague words like `complex` or `many` used near conditionals without numeric criteria. (retroactive)
-- [high_divergence](./high_divergence.md), a section with many conditional paths and many substeps that should be extracted into a Level 3 tool. (retroactive)
+- [high_divergence](./high_divergence.md), a section with many conditional paths and many substeps that should be extracted into a procedure tool. (retroactive)
 - [instruction_bleeding](./instruction_bleeding.md), steps from one conditional branch contaminating another branch block.
 - [missing_termination](./missing_termination.md), retry or loop language with no hard termination condition.
 - [skipped_conditions](./skipped_conditions.md), a required decision point silently skipped instead of gated to a terminal outcome.
@@ -49,7 +49,7 @@ Heuristics that were sent back for revision before a final decision. Empty for n
 Two checks already exist in some scanners but are not proposed as heuristics here because they map directly to invariants in the main spec:
 
 - **`prose_conditional`** (subjective "if" conditions), covered by Pattern 02 "No hidden logic".
-- **`missing_instructions`** (tool output interpreted by the LLM instead of executed verbatim), covered by Pattern 02 "Verbatim execution at L3".
+- **`missing_instructions`** (tool output interpreted by the LLM instead of executed verbatim), covered by Pattern 02 "Verbatim execution".
 
 Do not re-propose these as standalone heuristics. If a scanner needs to flag them, it enforces the existing invariants.
 

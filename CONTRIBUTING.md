@@ -50,7 +50,7 @@ Every pattern page follows this structure:
 - Examples are standalone TypeScript files that run with [Bun](https://bun.sh)
 - No external dependencies — use `parseArgs` from Node's `util` for CLI args
 - Each tool should follow the standard contract: named CLI parameters → JSON to stdout
-- Include a top-of-file docstring explaining which level of the spectrum it demonstrates (Data / Classification / Instructions)
+- Include a top-of-file docstring explaining which tool type it demonstrates (Data / Classification / Procedure)
 - Add a `main` section that runs a realistic example
 
 ## General guidelines

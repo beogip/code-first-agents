@@ -56,7 +56,7 @@ The decision lives in the tool. The skill reads a number and branches on a thres
 
 ## Rationale
 
-Code-First is a question of placement. When a skill uses a vague adjective inside a branch condition, the decision is neither in code nor visible in the skill, it is inside the LLM's interpretation of one word. The same run produces different branches. We fix this by giving the skill a numeric signal to read, or by moving the branching into a Level 2 or Level 3 tool.
+Code-First is a question of placement. When a skill uses a vague adjective inside a branch condition, the decision is neither in code nor visible in the skill, it is inside the LLM's interpretation of one word. The same run produces different branches. We fix this by giving the skill a numeric signal to read, or by moving the branching into a classification or procedure tool.
 
 ## Relationship to existing invariants
 

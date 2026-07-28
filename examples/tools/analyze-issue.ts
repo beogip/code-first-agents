@@ -2,9 +2,9 @@
 /**
  * analyze-issue.ts
  *
- * Level 3 (Instructions): Fetches a GitHub issue, scores its signals,
+ * Procedure: Fetches a GitHub issue, scores its signals,
  * classifies its complexity, AND returns literal instructions for the LLM
- * to follow verbatim. At this level the tool becomes a prompt factory:
+ * to follow verbatim. Here the tool becomes a prompt factory:
  * every decision lives in deterministic code, and the LLM just executes.
  *
  * Usage:

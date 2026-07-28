@@ -2,7 +2,7 @@
 /**
  * classify-issue.ts
  *
- * Level 2 (Classification): Fetches a GitHub issue, scores its structural
+ * Classification: Fetches a GitHub issue, scores its structural
  * signals, and returns a complexity classification. The LLM reads the
  * classification and branches its behavior accordingly.
  *

@@ -12,7 +12,7 @@ A single section of a skill contains several conditional paths, each with severa
 
 ## What it detects
 
-Sections that have grown past the point where inline branching is safe. When a section holds several `if`, `else`, or `otherwise` blocks and each block carries several substeps, the skill is describing a procedure that depends on which branch the LLM takes. The procedure is long enough that drift between branches becomes likely, and the skill is the wrong place to hold it. At that point, the branching belongs in a tool that returns a Level 3 instructions field.
+Sections that have grown past the point where inline branching is safe. When a section holds several `if`, `else`, or `otherwise` blocks and each block carries several substeps, the skill is describing a procedure that depends on which branch the LLM takes. The procedure is long enough that drift between branches becomes likely, and the skill is the wrong place to hold it. At that point, the branching belongs in a tool that returns an `instructions` field.
 
 ## Detection signal
 
@@ -65,13 +65,13 @@ The tool computes the size, picks the branch, and returns the literal procedure.
 
 ## Rationale
 
-Divergence is the point where the cost of keeping branches consistent in prose is higher than the cost of encoding them. Every edit to one branch has to be mirrored in the others, and the LLM is the one bridging the mirror. Tools hold branches without drift. At this size, the section should be a Level 3 tool call.
+Divergence is the point where the cost of keeping branches consistent in prose is higher than the cost of encoding them. Every edit to one branch has to be mirrored in the others, and the LLM is the one bridging the mirror. Tools hold branches without drift. At this size, the section should be a procedure tool call.
 
 ## Relationship to existing invariants
 
 Pattern 02 "No hidden logic" requires every decision in a skill to be visible in the file. A divergent section is technically visible, the branches are right there, but the decision about which branch to take is not. This heuristic names the size at which visibility stops being enough, and the branching should move to a tool that returns instructions.
 
-Pattern 02 also describes the three skill shapes (thick, branching, thin). High divergence is the signal that a branching skill has outgrown Level 2 and should drop to a thin shell consuming a Level 3 tool.
+Pattern 02 also describes the three skill shapes (thick, branching, thin). High divergence is the signal that a branching skill has outgrown classification and should drop to a thin shell consuming a procedure tool.
 
 ## Reference implementation
 

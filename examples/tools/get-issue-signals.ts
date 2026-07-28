@@ -2,7 +2,7 @@
 /**
  * get-issue-signals.ts
  *
- * Level 1 (Data): Fetches a GitHub issue and returns raw structural signals.
+ * Data: Fetches a GitHub issue and returns raw structural signals.
  * The LLM interprets the signals and decides what to do.
  *
  * Usage:

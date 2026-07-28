@@ -7,7 +7,7 @@ tools:
 
 # plan-issue
 
-This skill demonstrates **Level 3: Instructions** from the Code-First Agents pattern.
+This skill demonstrates the **Procedure** tool type from the Code-First Agents pattern.
 The tool decides everything. The LLM executes.
 
 ## Phase 1: Analyze

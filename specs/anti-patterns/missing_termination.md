@@ -64,7 +64,7 @@ Termination is the cost ceiling. A loop without a ceiling is a skill that can sp
 
 Pattern 02 "No hidden state" says a skill that depends on memory between runs is a different pattern, and skills run from their first phase every time. Missing termination overlaps with this invariant but does not coincide with it. "No hidden state" is about state *between* runs. Missing termination is about bounds *inside* one run. A skill can satisfy "No hidden state" (every run starts fresh) and still fail this heuristic (the loop inside one run has no cap). The two invariants are in different axes.
 
-Pattern 02 "Verbatim execution at L3" is also relevant. A Level 3 skill that consumes a tool which owns the termination counter is the canonical shape for a bounded loop: the tool tells the skill whether to continue, and the skill follows verbatim. This heuristic is the forcing function for that shape whenever a skill has any loop language.
+Pattern 02 "Verbatim execution" is also relevant. A thin skill that consumes a tool which owns the termination counter is the canonical shape for a bounded loop: the tool tells the skill whether to continue, and the skill follows verbatim. This heuristic is the forcing function for that shape whenever a skill has any loop language.
 
 ## Design decisions
 
