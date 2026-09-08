@@ -1,6 +1,6 @@
 # Code-First Agents
 
-**Status:** Living document · **Last updated:** 2026-07-28
+**Status:** Living document · **Last updated:** 2026-09-08
 
 ## Opening thesis
 
@@ -79,8 +79,8 @@ const input = await gather(values);
 // 2. Transform deterministically. No LLM calls.
 const result = transform(input);
 
-// 3. Emit a single JSON object on stdout.
-console.log(JSON.stringify(result));
+// 3. Emit a single JSON object on stdout, whether the run succeeded or failed.
+console.log(JSON.stringify({ ok: true, ...result }));
 ```
 
 When we open a real tool file, we look for this shape. A file that calls a language model, hides state between runs, or prints prose to stdout does not match.
@@ -90,11 +90,12 @@ When we open a real tool file, we look for this shape. A file that calls a langu
 Every deterministic tool shares the same contract:
 
 - **Named input.** Tools accept named CLI parameters, not positional arguments.
-- **JSON output.** Tools print a single JSON object to stdout on success.
+- **JSON output.** Tools print a single JSON object to stdout on every run.
 - **No LLM inside.** Tools never call a language model. If the work needs judgment, it is not a tool.
 - **Deterministic.** Same input, same output, every time. No hidden state between runs.
-- **Self-describing (recommended).** Tools expose their output schema via a `--schema` flag, so callers can validate the contract and CI can catch drift.
-- **Fail loud.** Errors use a non-zero exit code and write an error message to stderr.
+- **Self-describing (recommended).** Tools expose their output schema via a `--schema` flag, so callers can validate the contract and CI can catch drift. A `--schema` run is its own case, and the object it returns is the schema.
+- **Fail loud.** A failing tool uses the same channel a passing tool uses: a single JSON object on stdout, carrying a descriptive error message the caller can read. The tool throws descriptive errors internally, and its boundary serializes them into that object. The pattern does not prescribe how the process terminates. That decision is left to the implementation.
+- **Error structure (suggested).** Returning the object is mandatory. Its exact structure is not. One shape that works: `ok` as a boolean, `error` as a short machine-readable identifier, and `message` as the human-readable description.
 
 ### The three tool types
 
@@ -232,6 +233,21 @@ Three principles hold the pattern together.
 ## Evolution
 
 This section tracks meaningful changes to the patterns over time. Entries are chronological, newest first.
+
+### 2026-09-08, Tools return the same JSON object on failure
+
+A deterministic tool prints one JSON object on every run, whether the work succeeded or failed. The contract previously routed failures outside that object, so a caller had to parse two channels, and a failure was easy to swallow.
+
+**What changed:**
+
+- **Fail loud** now names the returned object as the failure channel. The object carries a descriptive error message the caller can read.
+- Tools throw descriptive errors internally. The boundary catches them and serializes them into the returned object.
+- How the process terminates is left to the implementation. The pattern no longer prescribes it.
+- **Error structure (suggested)** offers `ok`, `error`, and `message` as one shape that works. Returning the object is mandatory, its structure is not, so field names stay in `examples/` under the separation rule.
+- The tool skeleton emits `{ ok: true, ...result }`, so the result rides at the top level next to the flag.
+- **Self-describing** states that a `--schema` run is its own case, so "every run" and the reserved flag do not read as a contradiction.
+
+**Known divergence.** The tools in `examples/` still fail the old way. Bringing the reference implementation in line needs a follow-up change.
 
 ### 2026-07-28, Tool types replace the numbered levels
 
